@@ -112,6 +112,17 @@ const ProfileHeader = styled(Grid)`
   }
 `;
 
+const TooltipContent = styled.div`
+  .name {
+    font-weight: 700;
+    margin-bottom: ${theme.spacing(0.5)}px;
+  }
+
+  .detail {
+    margin-bottom: ${theme.spacing(0.5)}px;
+  }
+`
+
 const ProfileTemplate = ({
   pageContext: { uri, person, socialPosts, links, listMember },
 }) => {
@@ -180,7 +191,7 @@ const ProfileTemplate = ({
                 onClick={() => {
                   window.open(link.url, '_blank');
                 }}
-                image={
+                image={(
                   <img
                     style={{
                       height: '100%',
@@ -188,7 +199,7 @@ const ProfileTemplate = ({
                     src={link.thumbnail_url}
                     alt={link.title}
                   />
-                }
+                )}
                 title={link.title}
                 subTitle={link.media}
               />
@@ -205,7 +216,7 @@ const ProfileTemplate = ({
       <>
         <Alert
           severity="warning"
-          action={
+          action={(
             <GoLinkExternal
               className="clickable"
               onClick={() => {
@@ -220,7 +231,7 @@ const ProfileTemplate = ({
                 );
               }}
             />
-          }
+          )}
         >
           {t('socialPost.discalimer')}
         </Alert>
@@ -397,7 +408,7 @@ const ProfileTemplate = ({
             </Grid>
           </Grid>
         </ProfileHeader>
-        {listMember.length && (
+        {!!listMember.length && (
           <Grid container spacing={1} className="list-member">
             {listMember
               .sort((a, b) => {
@@ -405,28 +416,64 @@ const ProfileTemplate = ({
                 if (a.order < b.order) return -1;
                 return 0;
               })
-              .map(c => (
-                <Grid item key={withLanguage(i18n, c, 'name')}>
-                  <DefaultTooltip
-                    title={
-                      <>
-                        {withLanguage(i18n, c, 'name')}
-                        {withLanguage(i18n, c, 'occupation')}
-                      </>
-                    }
-                    enterTouchDelay={10}
-                    leaveTouchDelay={5000}
-                    interactive
-                  >
-                    <PeopleCircle
-                      info={c}
-                      imgUrl={`${site.siteMetadata.siteUrl}/images/avatars/${c.uuid}.png`}
-                      xsdimension={32}
-                      showName={false}
-                    />
-                  </DefaultTooltip>
-                </Grid>
-              ))}
+              .map(c => {
+                const details = [
+                  {
+                    value: c.estimated_yob
+                    ? t('profile.age_value', {
+                        n: 2020 - c.estimated_yob,
+                      })
+                    : '-',
+                    title: t('profile.age_title'),
+
+                  },
+                  {
+                    value: withLanguage(i18n, c, 'occupation'),
+                    title: t('profile.occupation_title')
+                  },
+                  {
+                    value: withLanguage(i18n, c, 'political_affiliation'),
+                    title: t('profile.reportedPoliticalAffiliation_title')
+                  }
+                ]
+                return (
+                  <Grid item key={withLanguage(i18n, c, 'name')}>
+                    <DefaultTooltip
+                      title={(
+                        <TooltipContent>
+                          <Typography className='name' variant="h5">
+                            {withLanguage(i18n, c, 'name')}
+                          </Typography>
+                          {
+                            details.map(d => (
+                              <div className='detail'>
+                                <Typography variant="body2">
+                                  {d.value}
+                                </Typography>
+                                <Typography variant="caption" color="textSecondary">
+                                  {d.title}
+                                </Typography>
+                              </div>
+))
+                          }
+                        </TooltipContent>
+                      )}
+                      enterTouchDelay={10}
+                      leaveTouchDelay={5000}
+                      interactive
+                    >
+                      <div>
+                        <PeopleCircle
+                          info={c}
+                          imgUrl={`${site.siteMetadata.siteUrl}/images/avatars/${c.uuid}.png`}
+                          xsdimension={32}
+                          showName={false}
+                        />
+                      </div>
+                    </DefaultTooltip>
+                  </Grid>
+                )
+              })}
           </Grid>
         )}
         <Typography className="block" variant="body2">
