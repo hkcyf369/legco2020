@@ -121,7 +121,7 @@ const TooltipContent = styled.div`
   .detail {
     margin-bottom: ${theme.spacing(0.5)}px;
   }
-`
+`;
 
 const ProfileTemplate = ({
   pageContext: { uri, person, socialPosts, links, listMember },
@@ -191,7 +191,7 @@ const ProfileTemplate = ({
                 onClick={() => {
                   window.open(link.url, '_blank');
                 }}
-                image={(
+                image={
                   <img
                     style={{
                       height: '100%',
@@ -199,7 +199,7 @@ const ProfileTemplate = ({
                     src={link.thumbnail_url}
                     alt={link.title}
                   />
-                )}
+                }
                 title={link.title}
                 subTitle={link.media}
               />
@@ -216,7 +216,7 @@ const ProfileTemplate = ({
       <>
         <Alert
           severity="warning"
-          action={(
+          action={
             <GoLinkExternal
               className="clickable"
               onClick={() => {
@@ -231,7 +231,7 @@ const ProfileTemplate = ({
                 );
               }}
             />
-          )}
+          }
         >
           {t('socialPost.discalimer')}
         </Alert>
@@ -420,44 +420,43 @@ const ProfileTemplate = ({
                 const details = [
                   {
                     value: c.estimated_yob
-                    ? t('profile.age_value', {
-                        n: 2020 - c.estimated_yob,
-                      })
-                    : '-',
+                      ? t('profile.age_value', {
+                          n: 2020 - c.estimated_yob,
+                        })
+                      : '-',
                     title: t('profile.age_title'),
-
                   },
                   {
-                    value: withLanguage(i18n, c, 'occupation'),
-                    title: t('profile.occupation_title')
+                    value: withLanguage(i18n, c, 'occupation') || '-',
+                    title: t('profile.occupation_title'),
                   },
                   {
-                    value: withLanguage(i18n, c, 'political_affiliation'),
-                    title: t('profile.reportedPoliticalAffiliation_title')
-                  }
-                ]
+                    value:
+                      withLanguage(i18n, c, 'political_affiliation') || '-',
+                    title: t('profile.reportedPoliticalAffiliation_title'),
+                  },
+                ];
                 return (
                   <Grid item key={withLanguage(i18n, c, 'name')}>
                     <DefaultTooltip
-                      title={(
+                      title={
                         <TooltipContent>
-                          <Typography className='name' variant="h5">
+                          <Typography className="name" variant="h5">
                             {withLanguage(i18n, c, 'name')}
                           </Typography>
-                          {
-                            details.map(d => (
-                              <div className='detail'>
-                                <Typography variant="body2">
-                                  {d.value}
-                                </Typography>
-                                <Typography variant="caption" color="textSecondary">
-                                  {d.title}
-                                </Typography>
-                              </div>
-))
-                          }
+                          {details.map(d => (
+                            <div className="detail">
+                              <Typography variant="body2">{d.value}</Typography>
+                              <Typography
+                                variant="caption"
+                                color="textSecondary"
+                              >
+                                {d.title}
+                              </Typography>
+                            </div>
+                          ))}
                         </TooltipContent>
-                      )}
+                      }
                       enterTouchDelay={10}
                       leaveTouchDelay={5000}
                       interactive
@@ -472,7 +471,7 @@ const ProfileTemplate = ({
                       </div>
                     </DefaultTooltip>
                   </Grid>
-                )
+                );
               })}
           </Grid>
         )}
