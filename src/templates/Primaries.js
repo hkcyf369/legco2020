@@ -111,7 +111,7 @@ const PrimaryTemplate = ({
                   '_blank'
                 );
               }}
-              image={(
+              image={
                 <img
                   style={{
                     height: '100%',
@@ -125,7 +125,7 @@ const PrimaryTemplate = ({
                   }
                   alt={asset.title}
                 />
-              )}
+              }
               title={asset.title}
               subTitle={asset.channel}
             />
@@ -166,7 +166,7 @@ const PrimaryTemplate = ({
             className={`nav-link ${
               c.node.key === constituency.key ? 'active' : ''
             }`}
-            to={getLocalizedPath(i18n, `/primary/${c.node.key}`)}
+            to={getLocalizedPath(i18n, `/primaries/${c.node.key}`)}
           >
             {withLanguage(i18n, c.node, 'alias')}
           </Link>

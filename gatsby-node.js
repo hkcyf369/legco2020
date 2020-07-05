@@ -287,6 +287,14 @@ exports.createPages = async function createPages({
   actions,
   reporter,
 }) {
+
+  actions.createRedirect({
+    fromPath: `/primary`,
+    toPath: `/primaries`,
+    redirectInBrowser: true,
+    isPermanent: true,
+  })
+
   const { createPage } = actions;
   const GeoFuncDc2ConstituencyTemplate = path.resolve(
     './src/templates/GeoFuncDc2Constituency.js'
@@ -297,7 +305,7 @@ exports.createPages = async function createPages({
   
   const ProfileTemplate = path.resolve('./src/templates/Profile.js');
 
-  const PrimaryTemplate = path.resolve('./src/templates/Primary.js');
+  const PrimaryTemplate = path.resolve('./src/templates/Primaries.js');
 
   const PrimariesStationsTemplate = path.resolve('./src/templates/PrimariesStations.js');
 
@@ -533,7 +541,7 @@ exports.createPages = async function createPages({
 
   result.data.allPrimary.edges.forEach(constituency => {
     LANGUAGES.forEach(lang => {
-      const uri = getPath(lang, `/primary/${constituency.node.key}`);
+      const uri = getPath(lang, `/primaries/${constituency.node.key}`);
       createPage({
         path: uri,
         component: PrimaryTemplate,

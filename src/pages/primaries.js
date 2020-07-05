@@ -21,7 +21,8 @@ const DirectWrapper = styled.div`
   }
 
   .seat {
-    padding: ${props => props.theme.spacing(1)}px ${props => props.theme.spacing(1.5)}px;
+    padding: ${props => props.theme.spacing(1)}px
+      ${props => props.theme.spacing(1.5)}px;
     border-radius: 2px;
     box-shadow: 0 1px 6px 0 ${props => props.theme.palette.divider};
 
@@ -160,7 +161,7 @@ const PrimaryPage = props => {
                   key={e.key}
                   className="seat clickable"
                   onClick={() => {
-                    navigate(getLocalizedPath(i18n, `/primary/${e.key}`));
+                    navigate(getLocalizedPath(i18n, `/primaries/${e.key}`));
                   }}
                 >
                   <div className="title">

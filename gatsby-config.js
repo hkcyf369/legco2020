@@ -32,7 +32,7 @@ module.exports = {
       options: {
         name: 'Vote4.hk',
         short_name: 'Vote4.hk',
-        start_url: '/primary',
+        start_url: '/primaries',
         background_color: '#483d8b',
         theme_color: '#483d8b',
         display: 'standalone',

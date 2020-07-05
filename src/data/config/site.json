@@ -8,7 +8,7 @@
       },
       {
         "title": "primary.title",
-        "to": "/primary",
+        "to": "/primaries",
         "icon": "primary"
       }
     ]
