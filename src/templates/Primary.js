@@ -11,9 +11,10 @@ import { PeopleBox } from '@/components/People';
 import ResponsiveSections from '@/components/ResponsiveSections';
 import List from '@/components/List';
 import SEO from '@/components/seo';
-import { CompactImageLinkBox } from '@/components/LinkBox';
+import { CompactImageLinkBox, LinkBox } from '@/components/LinkBox';
 import { useTheme } from '@material-ui/core/styles';
 import { FaVoteYea } from 'react-icons/fa';
+import { RiDirectionLine } from 'react-icons/ri';
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 
 const Nav = styled.div`
@@ -72,7 +73,32 @@ const CandidatesWrapper = styled.div`
   }
 `;
 
+
+const StationBox = styled.div`
+  padding: ${props => props.theme.spacing(1.5)}px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .content {
+    margin-right: ${props => props.theme.spacing(1)}px;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .paper-vote-text {
+    background: ${props => props.theme.palette.secondary.main};
+    padding: 3px 8px;
+    color: #ffffff;
+  }
+`;
+
 const PrimaryTemplate = ({
+  data: { allPrimariesStations },
   pageContext: { uri, allConstituencies, constituency, candidates, assets },
 }) => {
   const { t, i18n } = useTranslation();
@@ -85,6 +111,26 @@ const PrimaryTemplate = ({
             siteUrl
           }
         }
+        allPrimariesStations(filter: {dc_code: {eq: "Z"}}) {
+          edges {
+            node {
+              id
+              cacode
+              dc_code
+              dc_name_zh
+              dc_name_en
+              constituency
+              lc_name_zh
+              paper_vote
+              address_zh
+              remarks_zh
+              address_en
+              remarks_en
+              lat
+              lng
+            }
+          }
+        }
       }
     `
   );
@@ -92,7 +138,7 @@ const PrimaryTemplate = ({
   const theme = useTheme();
 
   const sections = [];
-
+  
   if (assets.length) {
     sections.push({
       name: 'election_forum',
@@ -111,7 +157,7 @@ const PrimaryTemplate = ({
                   '_blank'
                 );
               }}
-              image={
+              image={(
                 <img
                   style={{
                     height: '100%',
@@ -125,7 +171,7 @@ const PrimaryTemplate = ({
                   }
                   alt={asset.title}
                 />
-              }
+              )}
               title={asset.title}
               subTitle={asset.channel}
             />
@@ -134,6 +180,54 @@ const PrimaryTemplate = ({
       ),
     });
   }
+
+
+  const primariesStationsHS = allPrimariesStations.edges.map(s => s.node).filter(s => s.constituency === 'HS' && constituency.key === 'HS')
+
+  if (primariesStationsHS.length) {
+    sections.push({
+      name: 'primaries_stations.title',
+      title: t('primaries_stations.title'),
+      content: (
+        <List>
+          {primariesStationsHS.map(station => (
+            <LinkBox
+              key={station.id}
+              onClick={() => {
+            window.open(
+              `https://maps.google.com/?q=${station.address_zh}`,
+              '_blank'
+            );
+          }}
+            >
+              <StationBox theme={theme}>
+                <div className="content">
+                  <Typography variant="caption" color="textSecondary">
+                    {withLanguage(i18n, station, 'dc_name')}
+                  </Typography>
+                  <Typography variant="h5">
+                    {withLanguage(i18n, station, 'address')}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    {withLanguage(i18n, station, 'remarks')}
+                  </Typography>
+                  {station.paper_vote === 'Y' && (
+                  <Typography variant="caption" className="paper-vote-text">
+                    {t('paper_vote')}
+                  </Typography>
+              )}
+                </div>
+                <div>
+                  <RiDirectionLine className="icon" />
+                </div>
+              </StationBox>
+            </LinkBox>
+            
+          ))}</List>
+      ),
+    });
+  }
+  
   return (
     <>
       <SEO
