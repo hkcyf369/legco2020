@@ -563,7 +563,7 @@ exports.createPages = async function createPages({
         component: path.resolve('./src/templates/Redirect.js'),
         context: {
           uri,
-          redirectURL: getPath(lang, uri),
+          redirectURL: getPath(lang, `/primaries/${constituency.node.key}`),
           locale: lang,
         },
       })
