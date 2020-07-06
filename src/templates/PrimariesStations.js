@@ -13,6 +13,14 @@ import { RiDirectionLine } from 'react-icons/ri';
 import { BsPeopleFill } from 'react-icons/bs';
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 
+const PrimariesStationsWrapper = styled.div`
+  .group-title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: ${props => props.theme.spacing(2)}px 0;
+  }
+`
+
 const Nav = styled.div`
   padding-bottom: ${props => props.theme.spacing(1)}px;
   overflow-x: auto;
@@ -80,50 +88,83 @@ const PrimariesStationsTemplate = ({
 
   const sections = [];
 
+  const grouppedStations = stations.reduce((a, c) => {
+    const idx = a.findIndex(
+      element => element.dc_code === c.dc_code
+    );
+    if (idx < 0) {
+      return [
+        ...a,
+        {
+          key: c.dc_code,
+          dc_code: c.dc_code,
+          title: withLanguage(i18n, c, 'dc_name'),
+          stations: [c],
+        },
+      ];
+    }
+
+    a[idx].stations.push(c);
+    return a;
+  }, []);
+
   sections.push({
     name: 'primaries_stations.title',
     title: t('primaries_stations.title'),
     content: (
-      <List>
-        {stations.map(station => (
-          <LinkBox
-            key={station.id}
-            onClick={() => {
-              window.open(
-                `https://maps.google.com/?q=${station.address_zh}`,
-                '_blank'
-              );
-            }}
-          >
-            <StationBox theme={theme}>
-              <div className="content">
-                <Typography variant="caption" color="textSecondary">
-                  {withLanguage(i18n, station, 'dc_name')}
-                </Typography>
-                <Typography variant="h5">
-                  {withLanguage(i18n, station, 'address')}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  {withLanguage(i18n, station, 'remarks')}
-                </Typography>
-                {station.paper_vote === 'Y' && (
-                  <Typography variant="caption" className="paper-vote-text">
-                    {t('paper_vote')}
-                  </Typography>
-                )}
-              </div>
-              <div>
-                <RiDirectionLine className="icon" />
-              </div>
-            </StationBox>
-          </LinkBox>
-        ))}
-      </List>
+      <div>
+        {
+          grouppedStations.sort((a, b) => {
+            if (a.dc_code > b.dc_code) return 1;
+            if (a.dc_code < b.dc_code) return -1;
+            return 0;
+          }).map(group => (
+            <>
+              <div className="group-title">{group.title}</div>
+              <List>
+                {group.stations.map(station => (
+                  <LinkBox
+                    key={station.id}
+                    onClick={() => {
+                      window.open(
+                        `https://maps.google.com/?q=${station.address_zh}`,
+                        '_blank'
+                      );
+                    }}
+                  >
+                    <StationBox theme={theme}>
+                      <div className="content">
+                        <Typography variant="caption" color="textSecondary">
+                          {withLanguage(i18n, station, 'dc_name')}
+                        </Typography>
+                        <Typography variant="h5">
+                          {withLanguage(i18n, station, 'address')}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary">
+                          {withLanguage(i18n, station, 'remarks')}
+                        </Typography>
+                        {station.paper_vote === 'Y' && (
+                          <Typography variant="caption" className="paper-vote-text">
+                            {t('paper_vote')}
+                          </Typography>
+                        )}
+                      </div>
+                      <div>
+                        <RiDirectionLine className="icon" />
+                      </div>
+                    </StationBox>
+                  </LinkBox>
+                ))}
+              </List>
+            </>
+          ))
+        }
+      </div>
     ),
   });
 
   return (
-    <>
+    <PrimariesStationsWrapper theme={theme}>
       <SEO
         uri={uri}
         titleOveride={`${t('primaries_stations.title')} | ${withLanguage(
@@ -153,7 +194,7 @@ const PrimariesStationsTemplate = ({
             key={c.node.key}
             className={`nav-link ${
               c.node.key === constituency.key ? 'active' : ''
-            }`}
+              }`}
             to={getLocalizedPath(i18n, `/primaries/stations/${c.node.key}`)}
           >
             {withLanguage(i18n, c.node, 'alias')}
@@ -212,7 +253,7 @@ const PrimariesStationsTemplate = ({
           {t('primaries_candidates')}
         </Fab>
       </Container>
-    </>
+    </PrimariesStationsWrapper>
   );
 };
 
