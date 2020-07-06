@@ -189,7 +189,7 @@ const PrimariesStationsTemplate = ({
               action: 'click_primaries_stations',
               label: constituency.name_zh,
             });
-            navigate(getLocalizedPath(i18n, `/primary/${constituency.key}`));
+            navigate(getLocalizedPath(i18n, `/primaries/${constituency.key}`));
           }}
           variant="extended"
           size="medium"
