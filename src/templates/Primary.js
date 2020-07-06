@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, Fab, Container } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { DC2019Result } from '@/data/ElectionResults';
@@ -13,6 +13,8 @@ import List from '@/components/List';
 import SEO from '@/components/seo';
 import { CompactImageLinkBox } from '@/components/LinkBox';
 import { useTheme } from '@material-ui/core/styles';
+import { FaVoteYea } from 'react-icons/fa';
+import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 
 const Nav = styled.div`
   padding-bottom: ${props => props.theme.spacing(1)}px;
@@ -265,6 +267,45 @@ const PrimaryTemplate = ({
         sections={sections}
         pageName={`primary_${constituency.name_zh}`}
       />
+      {['HKI', 'KLW', 'KLE', 'NTW', 'NTE'].includes(constituency.key) && (
+        <Container maxWidth="lg">
+          <Fab
+            className="clickable"
+            onClick={() => {
+              trackCustomEvent({
+                category: 'primaries_stations',
+                action: 'click_primaries_stations',
+                label: constituency.name_zh,
+              });
+              navigate(
+                getLocalizedPath(
+                  i18n,
+                  `/primaries/stations/${constituency.key}`
+                )
+              );
+            }}
+            variant="extended"
+            size="medium"
+            aria-label="add"
+            style={{
+              position: 'fixed',
+              bottom: theme.spacing(2),
+              right: theme.spacing(2),
+              backgroundColor: theme.palette.secondary.main,
+              color: '#FFFFFF',
+            }}
+          >
+            <FaVoteYea
+              style={{
+                width: 24,
+                height: 24,
+                marginRight: theme.spacing(1),
+              }}
+            />
+            {t('primaries_stations.title')}
+          </Fab>
+        </Container>
+      )}
     </>
   );
 };

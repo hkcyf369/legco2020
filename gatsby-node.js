@@ -26,6 +26,8 @@ const PUBLISHED_SPREADSHEET_CANDIDATES_LINKS_URL =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vQYjjA02OsY9_3mbNGbNd7LBv2GO6jnwRGxwinG_vtwOt09P1uPt0r32S8RZKZEMTizDh4GmSGPMboM/pub?gid=0';
 const PUBLISHED_SPREADSHEET_LIST_MEMBER_URL =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vTAeIndC4MRj2C0uz-NSRI75bz2FPaAK4zCpUWfDh18WI8duAFmlqWbBHZHCbXu-iGqnsvOa6S5G8fP/pub?gid=0';
+const PUBLISHED_SPREADSHEET_PRIMARIES_STATIONS_URL =
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vSu4MsnjK0H4mON_3wlURKRQ7novrIlvPOjWkzfNTB4bW4Fqee9qLVVzJFTEH_eZzc1oniwyP7b3CT7/pub?gid=0';
 const AIRTABLE_CANDIDATES_SPREADSHEET_ID = 'appTst6klxEECAHOv';
 
 
@@ -237,6 +239,12 @@ exports.sourceNodes = async props => {
       'ListMember',
       { skipFirstLine: true }
     ),
+    createPublishedGoogleSpreadsheetNode(
+      props,
+      PUBLISHED_SPREADSHEET_PRIMARIES_STATIONS_URL,
+      'PrimariesStations',
+      { skipFirstLine: true, alwaysEnabled: true }
+    ),
     createAirtableNode(
       props,
       AIRTABLE_CANDIDATES_SPREADSHEET_ID,
@@ -290,6 +298,8 @@ exports.createPages = async function createPages({
   const ProfileTemplate = path.resolve('./src/templates/Profile.js');
 
   const PrimaryTemplate = path.resolve('./src/templates/Primary.js');
+
+  const PrimariesStationsTemplate = path.resolve('./src/templates/PrimariesStations.js');
 
   const result = await graphql(`
     {
@@ -389,6 +399,26 @@ exports.createPages = async function createPages({
             political_affiliation_zh
             political_affiliation_en
             uuid
+          }
+        }
+      }
+      allPrimariesStations {
+        edges {
+          node {
+            id
+            cacode
+            dc_code
+            dc_name_zh
+            dc_name_en
+            constituency
+            lc_name_zh
+            paper_vote
+            address_zh
+            remarks_zh
+            address_en
+            remarks_en
+            lat
+            lng
           }
         }
       }
@@ -523,6 +553,28 @@ exports.createPages = async function createPages({
       });
     });
   });
+
+  const DirectPrimaries = result.data.allPrimary.edges.filter(d => ['HKI', 'KLW', 'KLE', 'NTW', 'NTE'].includes(d.node.key))
+  DirectPrimaries.forEach(constituency => {
+    LANGUAGES.forEach(lang => {
+      const uri = getPath(lang, `/primaries/stations/${constituency.node.key}`);
+      createPage({
+        path: uri,
+        component: PrimariesStationsTemplate,
+        context: {
+          uri,
+          allConstituencies: DirectPrimaries,
+          constituency: constituency.node,
+          stations: result.data.allPrimariesStations.edges.filter(
+            p =>
+              p.node.constituency === constituency.node.key
+          ).map(s => s.node),
+          locale: lang,
+        },
+      });
+    });
+  });
+
   const People = result.data.allCandidates.edges;
 
   const requests = People.map(person => {
