@@ -56,9 +56,16 @@ const StationBox = styled.div`
   .content {
     margin-right: ${props => props.theme.spacing(1)}px;
   }
+
   .icon {
     width: 24px;
     height: 24px;
+  }
+
+  .paper-vote-text {
+    background: ${props => props.theme.palette.secondary.main};
+    padding: 3px 8px;
+    color: #ffffff;
   }
 `;
 
@@ -98,7 +105,7 @@ const PrimariesStationsTemplate = ({
                   {withLanguage(i18n, station, 'remarks')}
                 </Typography>
                 {station.paper_vote === 'Y' && (
-                  <Typography variant="caption" color="secondary">
+                  <Typography variant="caption" className="paper-vote-text">
                     {t('paper_vote')}
                   </Typography>
                 )}
