@@ -45,7 +45,7 @@ function a11yProps(index) {
 }
 
 export default function SimpleTabs(props) {
-  const { tabs, onTabChange } = props;
+  const { tabs, onTabChange, variant = 'fullWidth' } = props;
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -60,7 +60,7 @@ export default function SimpleTabs(props) {
           value={value}
           onChange={handleChange}
           aria-label="simple tabs example"
-          variant="fullWidth"
+          variant={variant}
         >
           {tabs.map(tab => (
             <Tab

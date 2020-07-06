@@ -15,7 +15,7 @@ const DesktopWrapper = styled.div`
   }
 `;
 
-const ResponsiveSections = ({ sections, pageName }) => {
+const ResponsiveSections = ({ sections, pageName, variant }) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -34,6 +34,7 @@ const ResponsiveSections = ({ sections, pageName }) => {
     </>
   ) : (
     <SimpleTabs
+      variant={variant}
       tabs={sections}
       onTabChange={name => {
         trackCustomEvent({
