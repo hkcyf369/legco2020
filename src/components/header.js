@@ -40,7 +40,7 @@ export default function Header() {
           className={`${classes.title} clickable`}
           dangerouslySetInnerHTML={renderTitle()}
           onClick={() => {
-            navigate(getLocalizedPath(i18n, '/primary'));
+            navigate(getLocalizedPath(i18n, '/primaries'));
           }}
         />
         <LanguageSwitcher />

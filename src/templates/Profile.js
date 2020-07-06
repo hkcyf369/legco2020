@@ -279,13 +279,13 @@ const ProfileTemplate = ({
             <Breadcrumbs separator={<FaAngleRight />} aria-label="breadcrumb">
               <Link
                 className="nav-link"
-                to={getLocalizedPath(i18n, '/primary')}
+                to={getLocalizedPath(i18n, '/primaries')}
               >
                 {t('primary.short_title')}
               </Link>
               <Link
                 className="nav-link"
-                to={getLocalizedPath(i18n, `/primary/${person.constituency}`)}
+                to={getLocalizedPath(i18n, `/primaries/${person.constituency}`)}
               >
                 {t(`constituencies.alias_${person.constituency}`)}
               </Link>
