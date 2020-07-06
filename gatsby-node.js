@@ -289,8 +289,8 @@ exports.createPages = async function createPages({
 }) {
 
   actions.createRedirect({
-    fromPath: `/primary`,
-    toPath: `/primaries`,
+    fromPath: '/primary/',
+    toPath: '/primaries/',
     redirectInBrowser: false,
     isPermanent: true,
   })
@@ -302,7 +302,7 @@ exports.createPages = async function createPages({
   const TradFuncTemplate = path.resolve(
     './src/templates/TradFuncConstituency.js'
   );
-  
+
   const ProfileTemplate = path.resolve('./src/templates/Profile.js');
 
   const PrimaryTemplate = path.resolve('./src/templates/Primaries.js');
@@ -539,9 +539,36 @@ exports.createPages = async function createPages({
     });
   });
 
+  LANGUAGES.forEach(lang => {
+    createPage({
+      path: getPath(lang, '/primary'),
+      component: path.resolve('./src/templates/Redirect.js'),
+      context: {
+        uri: getPath(lang, '/primary'),
+        redirectURL: getPath(lang, '/primaries'),
+        locale: lang,
+      },
+    })
+  });
+
   result.data.allPrimary.edges.forEach(constituency => {
     LANGUAGES.forEach(lang => {
+
+
       const uri = getPath(lang, `/primaries/${constituency.node.key}`);
+
+      // https://www.gatsbyjs.org/docs/actions/#createRedirect
+      createPage({
+        path: getPath(lang, `/primary/${constituency.node.key}`),
+        component: path.resolve('./src/templates/Redirect.js'),
+        context: {
+          uri,
+          redirectURL: getPath(lang, uri),
+          locale: lang,
+        },
+      })
+
+
       createPage({
         path: uri,
         component: PrimaryTemplate,
@@ -551,8 +578,8 @@ exports.createPages = async function createPages({
           constituency: constituency.node,
           candidates: result.data.allCandidates.edges.filter(
             p =>
-              p.node.constituency === constituency.node.key && 
-              p.node.camp === 'DEMO' && 
+              p.node.constituency === constituency.node.key &&
+              p.node.camp === 'DEMO' &&
               p.node.tags && p.node.tags.findIndex(tag => tag.name_zh === '民主派初選') !== -1
           ),
           locale: lang,
