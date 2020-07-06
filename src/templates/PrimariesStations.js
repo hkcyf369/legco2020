@@ -1,15 +1,17 @@
 import React from 'react';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, Fab, Container } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { withLanguage, getLocalizedPath } from '@/utils/i18n';
-import { Link } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import ResponsiveSections from '@/components/ResponsiveSections';
 import List from '@/components/List';
 import SEO from '@/components/seo';
 import { LinkBox } from '@/components/LinkBox';
 import { useTheme } from '@material-ui/core/styles';
 import { RiDirectionLine } from 'react-icons/ri';
+import { BsPeopleFill } from 'react-icons/bs';
+import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 
 const Nav = styled.div`
   padding-bottom: ${props => props.theme.spacing(1)}px;
@@ -178,6 +180,38 @@ const PrimariesStationsTemplate = ({
         sections={sections}
         pageName={`primary_${constituency.name_zh}`}
       />
+      <Container maxWidth="lg">
+        <Fab
+          className="clickable"
+          onClick={() => {
+            trackCustomEvent({
+              category: 'primaries',
+              action: 'click_primaries_stations',
+              label: constituency.name_zh,
+            });
+            navigate(getLocalizedPath(i18n, `/primary/${constituency.key}`));
+          }}
+          variant="extended"
+          size="medium"
+          aria-label="add"
+          style={{
+            position: 'fixed',
+            bottom: theme.spacing(2),
+            right: theme.spacing(2),
+            backgroundColor: theme.palette.secondary.main,
+            color: '#FFFFFF',
+          }}
+        >
+          <BsPeopleFill
+            style={{
+              width: 24,
+              height: 24,
+              marginRight: theme.spacing(1),
+            }}
+          />
+          {t('primaries_candidates')}
+        </Fab>
+      </Container>
     </>
   );
 };
