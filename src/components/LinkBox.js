@@ -20,10 +20,21 @@ const List = styled(Grid)`
   }
 `;
 
+const FlexList = styled.div`
+  box-shadow: 0 1px 6px 0 ${props => props.theme.palette.divider};
+  line-height: 0;
+`;
+
 export const CompactImageLinkBox = ({ onClick, image, title, subTitle }) => {
   const theme = useTheme();
   return (
-    <List container className="clickable" key={title} onClick={onClick} theme={theme}>
+    <List
+      container
+      className="clickable"
+      key={title}
+      onClick={onClick}
+      theme={theme}
+    >
       <Grid item xs={4}>
         {image}
       </Grid>
@@ -36,5 +47,14 @@ export const CompactImageLinkBox = ({ onClick, image, title, subTitle }) => {
         <Typography variant="h6">{title}</Typography>
       </Grid>
     </List>
+  );
+};
+
+export const LinkBox = ({ key, onClick, children }) => {
+  const theme = useTheme();
+  return (
+    <FlexList className="clickable" key={key} onClick={onClick} theme={theme}>
+      {children}
+    </FlexList>
   );
 };
