@@ -291,7 +291,7 @@ exports.createPages = async function createPages({
   actions.createRedirect({
     fromPath: `/primary`,
     toPath: `/primaries`,
-    redirectInBrowser: true,
+    redirectInBrowser: false,
     isPermanent: true,
   })
 
