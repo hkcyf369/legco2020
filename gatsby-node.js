@@ -554,7 +554,7 @@ exports.createPages = async function createPages({
     });
   });
 
-  const DirectPrimaries = result.data.allPrimary.edges.filter(d => ['HKI', 'KLW', 'KLE', 'NTW', 'NTE'].includes(d.node.key))
+  const DirectPrimaries = result.data.allPrimary.edges.filter(d => ['HKI', 'KLW', 'KLE', 'NTW', 'NTE', 'HS'].includes(d.node.key))
   DirectPrimaries.forEach(constituency => {
     LANGUAGES.forEach(lang => {
       const uri = getPath(lang, `/primaries/stations/${constituency.node.key}`);
