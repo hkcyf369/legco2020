@@ -10,8 +10,8 @@ const LANGUAGES = ['zh', 'en'];
 
 require('dotenv').config();
 
-// const PUBLISHED_SPREADSHEET_I18N_URL =
-//     "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxZuhwUXNXiyFOyMZvBHcb0C1BUBGtOZ852dvx2sVhLVMN-hIXJUS6bDHnxgx7ho5U6J1P7sBWMNd4/pub?gid=0"
+const PUBLISHED_SPREADSHEET_I18N_URL = 
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vQxZuhwUXNXiyFOyMZvBHcb0C1BUBGtOZ852dvx2sVhLVMN-hIXJUS6bDHnxgx7ho5U6J1P7sBWMNd4/pub?gid=0'
 const PUBLISHED_SPREADSHEET_GEOGRAPHICAL_CONSTITUENCIES_FC2_URL =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vTSlXzn8tUEIgTAtQK4cey1JzunOctvquNQr-_76l98vdhD9Y4It5ZoNk06wEuBGoPIccFcjan0RXm7/pub?gid=1850485765';
 const PUBLISHED_SPREADSHEET_TRADITIONAL_FUNCTIONAL_CONSTITUENCIES_URL =
@@ -190,13 +190,12 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
 
 exports.sourceNodes = async props => {
   await Promise.all([
-    // TODO: Move i18n into google spreadsheet
-    // createPublishedGoogleSpreadsheetNode(
-    //     props,
-    //     PUBLISHED_SPREADSHEET_I18N_URL,
-    //     "i18n",
-    //     { skipFirstLine: false, alwaysEnabled: true }
-    // ),
+    createPublishedGoogleSpreadsheetNode(
+        props,
+        PUBLISHED_SPREADSHEET_I18N_URL,
+        'i18n',
+        { skipFirstLine: false, alwaysEnabled: true }
+    ),
     createPublishedGoogleSpreadsheetNode(
       props,
       PUBLISHED_SPREADSHEET_GEOGRAPHICAL_CONSTITUENCIES_FC2_URL,

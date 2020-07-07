@@ -2,8 +2,12 @@ import React from 'react';
 import { Grid, Typography, Fab, Container } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { withLanguage, getLocalizedPath } from '@/utils/i18n';
-import { Link, navigate } from 'gatsby';
+import {
+  withLanguage,
+  getLocalizedPath,
+  withKeyAndLanguage,
+} from '@/utils/i18n';
+import { Link, navigate, useStaticQuery, graphql } from 'gatsby';
 import ResponsiveSections from '@/components/ResponsiveSections';
 import List from '@/components/List';
 import SEO from '@/components/seo';
@@ -19,7 +23,7 @@ const PrimariesStationsWrapper = styled.div`
     font-weight: 500;
     margin: ${props => props.theme.spacing(2)}px 0;
   }
-`
+`;
 
 const Nav = styled.div`
   padding-bottom: ${props => props.theme.spacing(1)}px;
@@ -83,6 +87,22 @@ const PrimariesStationsTemplate = ({
   pageContext: { uri, constituency, allConstituencies, stations },
 }) => {
   const { t, i18n } = useTranslation();
+
+  const { allI18N } = useStaticQuery(
+    graphql`
+      query {
+        allI18N {
+          edges {
+            node {
+              key
+              text_zh
+              text_en
+            }
+          }
+        }
+      }
+    `
+  );
 
   const theme = useTheme();
 
@@ -187,7 +207,7 @@ const PrimariesStationsTemplate = ({
             key={c.node.key}
             className={`nav-link ${
               c.node.key === constituency.key ? 'active' : ''
-              }`}
+            }`}
             to={getLocalizedPath(i18n, `/primaries/stations/${c.node.key}`)}
           >
             {withLanguage(i18n, c.node, 'alias')}
@@ -205,13 +225,17 @@ const PrimariesStationsTemplate = ({
             <div className="title">
               {withLanguage(i18n, constituency, 'name')}
             </div>
-            <div dangerouslySetInnerHTML={{ __html: t('primaries_rules') }} />
+            <div
+              dangerouslySetInnerHTML={{
+                __html: withKeyAndLanguage(i18n, allI18N, 'primaries_rules'),
+              }}
+            />
           </Grid>
         </Grid>
       </Header>
 
       <ResponsiveSections
-        variant='scrollable'
+        variant="scrollable"
         sections={sections}
         pageName={`primary_${constituency.name_zh}`}
       />

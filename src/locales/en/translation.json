@@ -56,7 +56,6 @@
     "list_count": "{{list_count}} lists",
     "demo_target": "Aiming for {{target}} seats",
     "demo_target_not_decide": "No target seats for Democratic",
-    "primary_election_description": "",
     "index.title": "Election Highlights",
     "primary.title": "Candidates for Democratic Primaries",
     "constituencies.alias_NTW": "New Territories West",
@@ -110,6 +109,5 @@
     "threshold": "Threshold",
     "paper_vote": "Ballot paper",
     "primaries_stations.title": "Primaries Stations",
-    "primaries_rules": "✅ 7.11（周六）、7.12（周日）；上午9時至晚上9時。留意部份票站服務時間不同。<br />✅ 你可於全區任何一個票站投票，不一定到自己區議會選區投票。<br />✅ 請帶同自己的智能電話到設於各區之服務站。<br />✅ 向服務站工作人員展示身分證，以供驗證。<br />✅ 向服務站工作人員提供以下任何一份文件：<p>(a)住址證明、<br />(b)過去的投票通知或<br />(c)選舉事務處網站查證選民記錄的螢幕截圖。<p><a href='https://www.google.com/maps/d/u/0/viewer?mid=1tiK9tjlTWPHXyHr0U28ReQ7b3OYr2H40&ll=22.355046234252853%2C114.10371639999998&z=11' target='_blanks'>Google 地圖</a></p>",
     "primaries_candidates": "Candidates"
 }

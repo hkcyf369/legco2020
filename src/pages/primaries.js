@@ -5,7 +5,11 @@ import { useTheme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { withLanguage, getLocalizedPath } from '@/utils/i18n';
+import {
+  withLanguage,
+  getLocalizedPath,
+  withKeyAndLanguage,
+} from '@/utils/i18n';
 
 const DirectHeader = styled.div`
   margin: ${props => props.theme.spacing(2)}px 0;
@@ -72,66 +76,11 @@ const DirectWrapper = styled.div`
 
 const PrimaryPage = props => {
   const {
-    data: { allPrimary, allCandidates },
+    data: { allPrimary, allCandidates, allI18N },
   } = props;
-  // const seats = [
-  //   ...Array.from(allGeoFuncDc2.nodes),
-  //   ...Array.from(allTradFunc.nodes),
-  // ];
 
   const { t } = useTranslation();
   const theme = useTheme();
-  // group data for chart
-  // const seatCount = {
-  //   UNRESOLVED: 70,
-  // };
-
-  // seats.forEach(seat => {
-  //   Object.keys(seat)
-  //     .filter(k => k.includes('expected'))
-  //     .map(key => {
-  //       const seatType = `${seat.type}_${key}`.toUpperCase();
-  //       if (typeof seatCount[seatType] === 'undefined') {
-  //         seatCount[seatType] = Number(seat[key]);
-  //       } else {
-  //         seatCount[seatType] += Number(seat[key]);
-  //       }
-  //       seatCount.UNRESOLVED -= Number(seat[key]);
-  //     });
-  // });
-
-  // Build chart data
-  // const chartData = Object.keys(seatColorMapping).map(scm => ({
-  //   key: scm,
-  //   label: t(`stackedBar.${scm}`),
-  //   value: seatCount[scm],
-  //   color: seatColorMapping[scm],
-  // }));
-
-  // // Build chart data
-  // const summary = {
-  //   DEMO: {
-  //     name: t('alias.DEMO'),
-  //     pos: 'start',
-  //     total: 0,
-  //     background: theme.palette.warning.light,
-  //   },
-  //   BEIJING: {
-  //     name: t('alias.BEIJING'),
-  //     pos: 'end',
-  //     total: 0,
-  //     background: theme.palette.info.light,
-  //   },
-  // };
-
-  // chartData.forEach(c => {
-  //   if (c.key.includes('DEMO')) {
-  //     summary.DEMO.total += c.value;
-  //   }
-  //   if (c.key.includes('BEIJING')) {
-  //     summary.BEIJING.total += c.value;
-  //   }
-  // });
 
   const { i18n } = useTranslation();
 
@@ -178,15 +127,7 @@ const PrimaryPage = props => {
                         {withLanguage(i18n, e, 'name')}
                       </Typography>
                     </div>
-                    <div>
-                      {/* <div style={{ width: '40px', height: '40px' }}>
-                        <SeatRowChart
-                          width={40}
-                          height={40}
-                          data={calculateSeatBox(e)}
-                        />
-                      </div> */}
-                    </div>
+                    <div />
                   </div>
                   <div className="roundup-title">
                     <div />
@@ -224,7 +165,7 @@ const PrimaryPage = props => {
         <Typography
           variant="body2"
           dangerouslySetInnerHTML={{
-            __html: t('primary_election_description'),
+            __html: withKeyAndLanguage(i18n, allI18N, 'primaries_rules'),
           }}
         />
       </DirectHeader>
@@ -237,6 +178,15 @@ export default PrimaryPage;
 
 export const PrimaryPageQuery = graphql`
   query {
+    allI18N {
+      edges {
+        node {
+          key
+          text_zh
+          text_en
+        }
+      }
+    }
     allPrimary {
       edges {
         node {

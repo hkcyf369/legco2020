@@ -34,3 +34,16 @@ export const withLanguagePendingTranslation = (i18n, object, path) => {
 export const getLocalizedPath = (i18n, path) => {
   return removePathTrailingSlash(i18n.language === 'en' ? `/en${path}` : path);
 };
+
+export const withKeyAndLanguage = (
+  i18n,
+  object,
+  path,
+  checkPendingTranslation = false
+) => {
+  const item = object.edges.find(e => e.node.key === path);
+  if (!item) {
+    return '';
+  }
+  return withLanguage(i18n, item.node, 'text', checkPendingTranslation);
+};
