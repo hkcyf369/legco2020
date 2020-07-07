@@ -109,5 +109,6 @@
     "threshold": "Threshold",
     "paper_vote": "Ballot paper",
     "primaries_stations.title": "Primaries Stations",
-    "primaries_candidates": "Candidates"
+    "primaries_candidates": "Candidates",
+    "demo_primaries.title": "Pro-Democracy primaries"
 }

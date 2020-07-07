@@ -162,6 +162,9 @@ const PrimaryPage = props => {
     <>
       <SEO title="Primary" />
       <DirectHeader theme={theme}>
+        <Typography variant="h4" gutterBottom>
+          {t('demo_primaries.title')}
+        </Typography>
         <Typography
           variant="body2"
           dangerouslySetInnerHTML={{
