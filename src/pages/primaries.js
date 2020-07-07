@@ -2,7 +2,7 @@ import React from 'react';
 import SEO from '@/components/seo';
 import { graphql, navigate } from 'gatsby';
 import { useTheme } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
+import { Typography, Button } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import {
@@ -10,6 +10,7 @@ import {
   getLocalizedPath,
   withKeyAndLanguage,
 } from '@/utils/i18n';
+import { FaVoteYea } from 'react-icons/fa';
 
 const DirectHeader = styled.div`
   margin: ${props => props.theme.spacing(2)}px 0;
@@ -171,6 +172,17 @@ const PrimaryPage = props => {
             __html: withKeyAndLanguage(i18n, allI18N, 'primaries_rules'),
           }}
         />
+        <Button
+          className="clickable"
+          onClick={() => {
+            navigate(getLocalizedPath(i18n, '/primaries/stations/HKI'));
+          }}
+          variant="contained"
+          color="secondary"
+          startIcon={<FaVoteYea />}
+        >
+          {t('primaries_stations.title')}
+        </Button>
       </DirectHeader>
       <>{renderConstituencies(allPrimary.edges)}</>
     </>
