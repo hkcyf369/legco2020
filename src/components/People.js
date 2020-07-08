@@ -11,8 +11,8 @@ const campColorMapping = (camp, theme) => {
     demo: theme.palette.warning.main,
     beijing: theme.palette.info.main,
     other: theme.palette.success.main,
-  }
-  return mapping[camp]
+  };
+  return mapping[camp];
 };
 
 const CampAvatar = styled(Avatar)`
@@ -20,6 +20,7 @@ const CampAvatar = styled(Avatar)`
   height: ${props => props.xsdimension || 48}px;
   border: ${props => (props.camp ? props.border || 3 : 0)}px
     ${props => campColorMapping(props.camp, props.theme)} solid;
+  opacity: ${props => props.opacity || 1};
 `;
 
 const PeopleWrapper = styled.div`
@@ -108,10 +109,24 @@ export const PeopleCircle = ({
   );
 };
 
-export const PeopleBox = ({ onClick, name, info, subText, imgUrl }) => {
+export const PeopleBox = ({ onClick, name, info, subText, imgUrl, status }) => {
   const theme = useTheme();
   const Wrapper = styled.div`
     display: flex;
+
+    .avatar-wrapper {
+      position: relative;
+
+      .icon {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
 
     .main {
       margin-left: ${props => props.theme.spacing(1)}px;
@@ -126,22 +141,26 @@ export const PeopleBox = ({ onClick, name, info, subText, imgUrl }) => {
   `;
   return (
     <Wrapper item onClick={onClick} theme={theme}>
-      <CampAvatar
-        alt={name}
-        src={imgUrl}
-        camp={info.camp.toLowerCase()}
-        xsdimension={56}
-        border={5}
-        theme={theme}
-      >
-        <img
+      <div className="avatar-wrapper">
+        <CampAvatar
           alt={name}
-          src={info.img_url}
-          style={{
-            maxWidth: '100%',
-          }}
-        />
-      </CampAvatar>
+          src={imgUrl}
+          camp={info.camp.toLowerCase()}
+          xsdimension={56}
+          border={5}
+          theme={theme}
+          opacity={status.opacity}
+        >
+          <img
+            alt={name}
+            src={info.img_url}
+            style={{
+              maxWidth: '100%',
+            }}
+          />
+        </CampAvatar>
+        {status.icon && <div className="icon">{status.icon}</div>}
+      </div>
       <div className="main">
         <Typography variant="h5">{name}</Typography>
         <Typography className="subText" variant="caption" color="textSecondary">

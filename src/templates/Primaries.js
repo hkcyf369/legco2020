@@ -4,7 +4,11 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { DC2019Result } from '@/data/ElectionResults';
 import VoteVsSeatChart from '@/components/charts/VoteVsSeat';
-import { calculateSeatBoxForPrimary, handleVideoUrl } from '@/utils';
+import {
+  calculateSeatBoxForPrimary,
+  handleVideoUrl,
+  getPeopleStatus,
+} from '@/utils';
 import { withLanguage, getLocalizedPath } from '@/utils/i18n';
 import { Link, navigate, useStaticQuery, graphql } from 'gatsby';
 import { PeopleBox } from '@/components/People';
@@ -111,7 +115,7 @@ const PrimaryTemplate = ({
                   '_blank'
                 );
               }}
-              image={(
+              image={
                 <img
                   style={{
                     height: '100%',
@@ -125,7 +129,7 @@ const PrimaryTemplate = ({
                   }
                   alt={asset.title}
                 />
-              )}
+              }
               title={asset.title}
               subTitle={asset.channel}
             />
@@ -259,6 +263,7 @@ const PrimaryTemplate = ({
                     )
                   );
                 }}
+                status={getPeopleStatus(c.node)}
               />
             </Grid>
           ))}

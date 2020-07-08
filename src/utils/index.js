@@ -1,4 +1,6 @@
+import React from 'react';
 import { seatColorMapping } from '@/config';
+import { IoMdRemoveCircle } from 'react-icons/io';
 
 export function openInNewTab(url) {
   const win = window.open(url, '_blank');
@@ -77,5 +79,18 @@ export const handleVideoUrl = ({ assetId, type, thumbnailUrl }) => {
   return {
     videoUrl,
     imgUrl,
+  };
+};
+
+export const getPeopleStatus = people => {
+  if (people.tags.findIndex(c => c.name_zh === '已退出初選') > -1) {
+    return {
+      icon: <IoMdRemoveCircle />,
+      opacity: 0.5,
+    };
+  }
+
+  return {
+    opacity: 1,
   };
 };
