@@ -131,7 +131,7 @@ export const PeopleBox = ({ onClick, name, info, subText, imgUrl, status }) => {
     }
 
     .subText {
-      line-height: 0.8rem;
+      line-height: 0.9rem;
     }
   `;
   return (

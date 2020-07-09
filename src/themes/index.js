@@ -14,20 +14,28 @@ const typography = {
     fontSize: '1.3rem',
     fontWeight: 500,
   },
+  h3: {
+    fontSize: '1.5rem',
+    fontWeight: 700,
+  },
   h4: {
-    fontSize: '1.1rem',
-    fontWeight: 500,
+    fontSize: '1.2rem',
+    fontWeight: 700,
   },
   h5: {
-    fontSize: '1rem',
-    fontWeight: 500,
+    fontSize: '1.1rem',
+    fontWeight: 700,
   },
   h6: {
-    fontSize: '0.8rem',
+    fontSize: '1rem',
     fontWeight: 500,
+    lineHeight: '1.2rem'
   },
   body1: {
     fontSize: '1rem',
+  },
+  caption: {
+    fontSize: '0.8rem',
   },
 };
 

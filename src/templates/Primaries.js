@@ -21,17 +21,17 @@ import { FaVoteYea } from 'react-icons/fa';
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 
 const Nav = styled.div`
-  padding-bottom: ${props => props.theme.spacing(1)}px;
+  padding: ${props => props.theme.spacing(1)}px 0;
   overflow-x: auto;
   white-space: nowrap;
 
   .nav-link {
     color: ${props => props.theme.palette.text.primary};
     text-decoration: none;
-    font-size: 14px;
+    font-size: 1rem;
     margin-bottom: ${props => props.theme.spacing(1)}px;
     margin-right: ${props => props.theme.spacing(1)}px;
-    padding: 3px 8px;
+    padding: 4px 8px;
   }
 
   .active {
@@ -47,11 +47,6 @@ const Header = styled(Grid)`
 
   .title-box {
     margin-right: ${props => props.theme.spacing(3)}px;
-  }
-  }
-  .title {
-    font-size: 24px;
-    font-weight: 700;
   }
 `;
 
@@ -176,7 +171,10 @@ const PrimaryTemplate = ({
           </Link>
         ))}
       </Nav>
-      <Header container>
+      <Header 
+        container
+        justify="flex-start"
+      >
         <Grid item>
           <Grid
             container
@@ -184,9 +182,9 @@ const PrimaryTemplate = ({
             justify="center"
             className="title-box"
           >
-            <div className="title">
+            <Typography variant="h3">
               {withLanguage(i18n, constituency, 'name')}
-            </div>
+            </Typography>
             <Typography variant="body2" color="textSecondary">
               {withLanguage(i18n, constituency, 'primary_rule')}
             </Typography>
@@ -195,7 +193,7 @@ const PrimaryTemplate = ({
             </Typography>
           </Grid>
         </Grid>
-        <Grid item>
+        <Grid item xs={7}>
           {DC2019Result[constituency.key] && (
             <VoteVsSeatChart
               title={{
@@ -214,7 +212,7 @@ const PrimaryTemplate = ({
       {withLanguage(i18n, constituency, 'primary_description') && (
         <Typography
           className="block"
-          variant="body2"
+          variant="body1"
           dangerouslySetInnerHTML={{
             __html: withLanguage(i18n, constituency, 'primary_description'),
           }}

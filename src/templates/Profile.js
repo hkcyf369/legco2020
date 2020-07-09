@@ -50,7 +50,7 @@ const ProfileTemplateWrapper = styled.div`
   .nav-link {
     color: ${props => props.theme.palette.text.primary};
     text-decoration: none;
-    font-size: 14px;
+    font-size: 1rem;
     margin-bottom: ${props => props.theme.spacing(1)}px;
   }
 
@@ -83,11 +83,6 @@ const ProfileTemplateWrapper = styled.div`
     .value {
       font-weight: 500;
     }
-
-    .title {
-      font-size: 0.75rem;
-      color: ${props => props.theme.palette.text.secondary};
-    }
   }
 `;
 
@@ -104,11 +99,6 @@ const ProfileHeader = styled(Grid)`
 
   .avatar-main.BEIJING {
     border: 5px ${props => props.theme.palette.info.main} solid;
-  }
-
-  .name {
-    font-size: 24px;
-    font-weight: 600;
   }
 `;
 
@@ -193,7 +183,7 @@ const ProfileTemplate = ({
                 onClick={() => {
                   window.open(link.url, '_blank');
                 }}
-                image={
+                image={(
                   <img
                     style={{
                       height: '100%',
@@ -201,7 +191,7 @@ const ProfileTemplate = ({
                     src={link.thumbnail_url}
                     alt={link.title}
                   />
-                }
+                )}
                 title={link.title}
                 subTitle={link.media}
               />
@@ -220,7 +210,7 @@ const ProfileTemplate = ({
           <>
             <Alert
               severity="warning"
-              action={
+              action={(
                 <GoLinkExternal
                   className="clickable"
                   onClick={() => {
@@ -235,7 +225,7 @@ const ProfileTemplate = ({
                     );
                   }}
                 />
-              }
+              )}
             >
               {t('socialPost.discalimer')}
             </Alert>
@@ -417,7 +407,7 @@ const ProfileTemplate = ({
               alignItems="flex-start"
               style={{ height: '100%' }}
             >
-              <div className="name">{withLanguage(i18n, person, 'name')}</div>
+              <Typography variant='h3'>{withLanguage(i18n, person, 'name')}</Typography>
               <Typography variant="body2" color="textSecondary">
                 {withLanguage(i18n, person, 'title')}
               </Typography>
@@ -455,14 +445,14 @@ const ProfileTemplate = ({
                 return (
                   <Grid item key={withLanguage(i18n, c, 'name')}>
                     <DefaultTooltip
-                      title={
+                      title={(
                         <TooltipContent>
                           <Typography className="name" variant="h5">
                             {withLanguage(i18n, c, 'name')}
                           </Typography>
                           {details.map(d => (
                             <div className="detail">
-                              <Typography variant="body2">{d.value}</Typography>
+                              <Typography variant="body1">{d.value}</Typography>
                               <Typography
                                 variant="caption"
                                 color="textSecondary"
@@ -472,7 +462,7 @@ const ProfileTemplate = ({
                             </div>
                           ))}
                         </TooltipContent>
-                      }
+                      )}
                       enterTouchDelay={10}
                       leaveTouchDelay={5000}
                       interactive
@@ -490,7 +480,7 @@ const ProfileTemplate = ({
               })}
           </Grid>
         )}
-        <Typography className="block" variant="body2">
+        <Typography className="block" variant="body1">
           {withLanguage(i18n, person, 'description')}
         </Typography>
         <Grid container className="highlights">
@@ -502,8 +492,8 @@ const ProfileTemplate = ({
               xs={ph.span}
               sm={ph.span}
             >
-              <div className="value">{ph.value}</div>
-              <div className="title">{ph.title}</div>
+              <Typography variant="body1">{ph.value}</Typography>
+              <Typography variant="caption" color="textSecondary">{ph.title}</Typography>
             </Grid>
           ))}
         </Grid>

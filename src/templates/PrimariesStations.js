@@ -26,17 +26,17 @@ const PrimariesStationsWrapper = styled.div`
 `;
 
 const Nav = styled.div`
-  padding-bottom: ${props => props.theme.spacing(1)}px;
+  padding: ${props => props.theme.spacing(1)}px 0;
   overflow-x: auto;
   white-space: nowrap;
 
   .nav-link {
     color: ${props => props.theme.palette.text.primary};
     text-decoration: none;
-    font-size: 14px;
+    font-size: 1rem;
     margin-bottom: ${props => props.theme.spacing(1)}px;
     margin-right: ${props => props.theme.spacing(1)}px;
-    padding: 3px 8px;
+    padding: 4px 8px;
   }
 
   .active {
@@ -53,10 +53,19 @@ const Header = styled(Grid)`
   .title-box {
     margin-right: ${props => props.theme.spacing(3)}px;
   }
-  }
-  .title {
-    font-size: 24px;
+
+  a {
     font-weight: 700;
+    color: ${props => props.theme.palette.text.primary};
+    border-bottom: 3px ${props => props.theme.palette.secondary.main} solid;
+    text-decoration: none;
+  }
+
+  a:hover {
+    font-weight: 700;
+    color: ${props => props.theme.palette.secondary.main};
+    background: ${props => props.theme.palette.text.primary};
+    text-decoration: none;
   }
 `;
 
@@ -78,7 +87,7 @@ const StationBox = styled.div`
 
   .paper-vote-text {
     background: ${props => props.theme.palette.secondary.main};
-    padding: 3px 8px;
+    padding: 4px 8px;
     color: #ffffff;
   }
 `;
@@ -153,7 +162,7 @@ const PrimariesStationsTemplate = ({
                     <Typography variant="caption" color="textSecondary">
                       {withLanguage(i18n, station, 'dc_name')}
                     </Typography>
-                    <Typography variant="h5">
+                    <Typography variant="h6">
                       {withLanguage(i18n, station, 'address')}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
@@ -222,10 +231,11 @@ const PrimariesStationsTemplate = ({
             justify="center"
             className="title-box"
           >
-            <div className="title">
+            <Typography variant='h3' gutterBottom>
               {withLanguage(i18n, constituency, 'name')}
-            </div>
-            <div
+            </Typography>
+            <Typography
+              variant='body1'
               dangerouslySetInnerHTML={{
                 __html: withKeyAndLanguage(i18n, allI18N, 'primaries_rules'),
               }}

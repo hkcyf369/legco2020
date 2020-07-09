@@ -49,10 +49,6 @@ const DirectWrapper = styled.div`
       justify-content: space-between;
     }
 
-    .sub-title {
-      font-size: 0.65rem;
-    }
-
     .roundup-title {
       margin-top: ${props => props.theme.spacing(0.5)}px;
       display: flex;

@@ -1,7 +1,7 @@
 import React from 'react';
 import SEO from '@/components/seo';
 import { graphql, navigate } from 'gatsby';
-import { Typography, Button } from '@material-ui/core';
+import { Typography, Button, Grid } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import {
@@ -13,6 +13,20 @@ import { FaVoteYea } from 'react-icons/fa';
 
 const DirectHeader = styled.div`
   margin: ${props => props.theme.spacing(2)}px 0;
+
+  a {
+    font-weight: 700;
+    color: ${props => props.theme.palette.text.primary};
+    border-bottom: 3px ${props => props.theme.palette.secondary.main} solid;
+    text-decoration: none;
+  }
+
+  a:hover {
+    font-weight: 700;
+    color: ${props => props.theme.palette.secondary.main};
+    background: ${props => props.theme.palette.text.primary};
+    text-decoration: none;
+  }
 `;
 
 const DirectWrapper = styled.div`
@@ -33,10 +47,6 @@ const DirectWrapper = styled.div`
     .title {
       display: flex;
       justify-content: space-between;
-    }
-
-    .sub-title {
-      font-size: 0.65rem;
     }
 
     .roundup-title {
@@ -112,14 +122,18 @@ const PrimaryPage = props => {
                     navigate(getLocalizedPath(i18n, `/primaries/${e.key}`));
                   }}
                 >
-                  <div className="title">
-                    <Typography variant="caption" color="textSecondary">
-                      {t('no_of_seats', { seats: e.seats })}
-                    </Typography>
-                    <div className="sub-title">
-                      {withLanguage(i18n, e, 'primary_rule')}
-                    </div>
-                  </div>
+                  <Grid container>
+                    <Grid item xs={12}>
+                      <Typography variant="caption" color="textSecondary">
+                        {t('no_of_seats', { seats: e.seats })}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant="caption">
+                        {withLanguage(i18n, e, 'primary_rule')}
+                      </Typography>
+                    </Grid>
+                  </Grid>
                   <div className="title">
                     <div>
                       <Typography variant="h5">
@@ -136,14 +150,14 @@ const PrimaryPage = props => {
                       <div className="large-number demo">
                         {candiDemo.length || '-'}
                       </div>
-                      <Typography variant="body2" color="textSecondary">
+                      <Typography variant="body1" color="textSecondary">
                         {t('lists')}
                       </Typography>
                     </div>
                     {Number(e.target) > 0 && (
                       <div className="center">
                         <div className="large-number">{e.target || '-'}</div>
-                        <Typography variant="body2" color="textSecondary">
+                        <Typography variant="body1" color="textSecondary">
                           {t('threshold')}
                         </Typography>
                       </div>
@@ -161,11 +175,11 @@ const PrimaryPage = props => {
     <>
       <SEO title="Primary" />
       <DirectHeader>
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h3" gutterBottom>
           {t('demo_primaries.title')}
         </Typography>
         <Typography
-          variant="body2"
+          variant="body1"
           dangerouslySetInnerHTML={{
             __html: withKeyAndLanguage(i18n, allI18N, 'primaries_rules'),
           }}
