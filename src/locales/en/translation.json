@@ -110,5 +110,6 @@
     "paper_vote": "Ballot paper",
     "primaries_stations.title": "Primaries Stations",
     "primaries_candidates": "Candidates",
-    "demo_primaries.title": "Pro-Democracy primaries"
+    "demo_primaries.title": "Pro-Democracy primaries",
+    "socialPost.no_content": "Social posts are temporarily available"
 }

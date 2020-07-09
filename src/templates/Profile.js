@@ -193,7 +193,7 @@ const ProfileTemplate = ({
                 onClick={() => {
                   window.open(link.url, '_blank');
                 }}
-                image={(
+                image={
                   <img
                     style={{
                       height: '100%',
@@ -201,7 +201,7 @@ const ProfileTemplate = ({
                     src={link.thumbnail_url}
                     alt={link.title}
                   />
-                )}
+                }
                 title={link.title}
                 subTitle={link.media}
               />
@@ -216,36 +216,44 @@ const ProfileTemplate = ({
     title: t('social_posts'),
     content: (
       <>
-        <Alert
-          severity="warning"
-          action={(
-            <GoLinkExternal
-              className="clickable"
-              onClick={() => {
-                trackCustomEvent({
-                  category: 'social_post',
-                  action: 'click',
-                  label: 'factchecklab',
-                });
-                window.open(
-                  'https://www.facebook.com/FactcheckLabHK',
-                  '_blank'
-                );
-              }}
-            />
-          )}
-        >
-          {t('socialPost.discalimer')}
-        </Alert>
-        <List>
-          {socialPosts.map(post => (
-            <SocialPost
-              key={post.title || post.content}
-              post={post}
-              candiName={person.name_zh}
-            />
-          ))}
-        </List>
+        {socialPosts.length ? (
+          <>
+            <Alert
+              severity="warning"
+              action={
+                <GoLinkExternal
+                  className="clickable"
+                  onClick={() => {
+                    trackCustomEvent({
+                      category: 'social_post',
+                      action: 'click',
+                      label: 'factchecklab',
+                    });
+                    window.open(
+                      'https://www.facebook.com/FactcheckLabHK',
+                      '_blank'
+                    );
+                  }}
+                />
+              }
+            >
+              {t('socialPost.discalimer')}
+            </Alert>
+            <List>
+              {socialPosts.map(post => (
+                <SocialPost
+                  key={post.title || post.content}
+                  post={post}
+                  candiName={person.name_zh}
+                />
+              ))}
+            </List>
+          </>
+        ) : (
+          <>
+            <Alert severity="warning">{t('socialPost.no_content')}</Alert>
+          </>
+        )}
       </>
     ),
   });
@@ -447,8 +455,7 @@ const ProfileTemplate = ({
                 return (
                   <Grid item key={withLanguage(i18n, c, 'name')}>
                     <DefaultTooltip
-                     
-                      title={(
+                      title={
                         <TooltipContent>
                           <Typography className="name" variant="h5">
                             {withLanguage(i18n, c, 'name')}
@@ -465,7 +472,7 @@ const ProfileTemplate = ({
                             </div>
                           ))}
                         </TooltipContent>
-                      )}
+                      }
                       enterTouchDelay={10}
                       leaveTouchDelay={5000}
                       interactive
@@ -541,7 +548,6 @@ const ProfileTemplate = ({
               }}
             >
               <HKFactcheckIcon
-               
                 style={{
                   width: 24,
                   height: 24,

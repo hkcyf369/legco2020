@@ -670,7 +670,15 @@ exports.createPages = async function createPages({
         person: person.node,
         socialPosts: data.socialPosts.nodes,
       })
-    );
+    ).catch(
+      error => {
+        console.log(error)
+        return {
+          person: person.node,
+          socialPosts: [],
+        }
+      }
+    )
   });
 
   return Promise.all(requests).then(responses =>
