@@ -1,7 +1,6 @@
 import React from 'react';
 import SEO from '@/components/seo';
 import { graphql, navigate } from 'gatsby';
-import { useTheme } from '@material-ui/core/styles';
 import { Typography, Button } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
@@ -81,14 +80,13 @@ const PrimaryPage = props => {
   } = props;
 
   const { t } = useTranslation();
-  const theme = useTheme();
 
   const { i18n } = useTranslation();
 
   const renderConstituencies = edges => {
     return (
       <>
-        <DirectWrapper theme={theme}>
+        <DirectWrapper>
           {edges
             .sort((a, b) => {
               if (a.node.order > b.node.order) return 1;
@@ -162,7 +160,7 @@ const PrimaryPage = props => {
   return (
     <>
       <SEO title="Primary" />
-      <DirectHeader theme={theme}>
+      <DirectHeader>
         <Typography variant="h4" gutterBottom>
           {t('demo_primaries.title')}
         </Typography>

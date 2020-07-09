@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import styled from 'styled-components';
-import { useTheme } from '@material-ui/core/styles';
+
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import { FcLike } from 'react-icons/fc';
@@ -38,7 +38,7 @@ const Post = styled.div`
 
 const SocialPost = ({ post, candiName }) => {
   const { t } = useTranslation();
-  const theme = useTheme();
+  
   
   return (
     <Post
@@ -63,7 +63,7 @@ const SocialPost = ({ post, candiName }) => {
           window.open(`https://www.facebook.com/${post.platformId}`, '_blank');
         }
       }}
-      theme={theme}
+     
     >
       <div className="sub-title">
         {post.group && (
@@ -79,17 +79,17 @@ const SocialPost = ({ post, candiName }) => {
       <div className="title">{post.title || post.content}</div>
 
       <Grid container spacing={3}>
-        <MetricsWrapper item theme={theme}>
+        <MetricsWrapper item>
           <IoMdTrendingUp />
           {post.performance ? `${post.performance.toFixed(2)}x` : '-'}
         </MetricsWrapper>
-        <MetricsWrapper item theme={theme}>
+        <MetricsWrapper item>
           <FcLike /> {post.likeCount || '-'}
         </MetricsWrapper>
-        <MetricsWrapper item theme={theme}>
+        <MetricsWrapper item>
           <IoMdHeartDislike /> {post.dislikeCount || '-'}
         </MetricsWrapper>
-        <MetricsWrapper item theme={theme}>
+        <MetricsWrapper item>
           <MdModeComment /> {post.replyCount || '-'}
         </MetricsWrapper>
       </Grid>

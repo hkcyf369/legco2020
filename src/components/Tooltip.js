@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Tooltip from '@material-ui/core/Tooltip';
-import { useTheme } from '@material-ui/core/styles';
+
 
 const StyledTooltip = styled(Tooltip)`
   & .tooltip {
@@ -16,12 +16,12 @@ const StyledTooltip = styled(Tooltip)`
 
 export const DefaultTooltip = props => {
   const { placement, className } = props;
-  const theme = useTheme();
+  
   return (
     <StyledTooltip
       placement={placement || 'bottom-start'}
       classes={{ popper: className, tooltip: 'tooltip' }}
-      theme={theme}
+     
       {...props}
     />
   )

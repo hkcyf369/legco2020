@@ -267,7 +267,7 @@ const ProfileTemplate = ({
           },
         ]}
       />
-      <ProfileTemplateWrapper theme={theme}>
+      <ProfileTemplateWrapper>
         <Grid
           className="top-row"
           container
@@ -384,7 +384,7 @@ const ProfileTemplate = ({
           </Grid>
         </Grid>
 
-        <ProfileHeader container spacing={3} theme={theme}>
+        <ProfileHeader container spacing={3}>
           <Grid item>
             <Avatar
               className={`avatar-main ${person.camp}`}
@@ -447,9 +447,9 @@ const ProfileTemplate = ({
                 return (
                   <Grid item key={withLanguage(i18n, c, 'name')}>
                     <DefaultTooltip
-                      theme={theme}
+                     
                       title={(
-                        <TooltipContent theme={theme}>
+                        <TooltipContent>
                           <Typography className="name" variant="h5">
                             {withLanguage(i18n, c, 'name')}
                           </Typography>
@@ -541,7 +541,7 @@ const ProfileTemplate = ({
               }}
             >
               <HKFactcheckIcon
-                theme={theme}
+               
                 style={{
                   width: 24,
                   height: 24,

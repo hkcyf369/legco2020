@@ -148,7 +148,7 @@ const PrimariesStationsTemplate = ({
                   );
                 }}
               >
-                <StationBox theme={theme}>
+                <StationBox>
                   <div className="content">
                     <Typography variant="caption" color="textSecondary">
                       {withLanguage(i18n, station, 'dc_name')}
@@ -177,7 +177,7 @@ const PrimariesStationsTemplate = ({
     });
 
   return (
-    <PrimariesStationsWrapper theme={theme}>
+    <PrimariesStationsWrapper>
       <SEO
         uri={uri}
         titleOveride={`${t('primaries_stations.title')} | ${withLanguage(
@@ -201,7 +201,7 @@ const PrimariesStationsTemplate = ({
           },
         ]}
       />
-      <Nav theme={theme}>
+      <Nav>
         {allConstituencies.map(c => (
           <Link
             key={c.node.key}
@@ -214,7 +214,7 @@ const PrimariesStationsTemplate = ({
           </Link>
         ))}
       </Nav>
-      <Header container theme={theme}>
+      <Header container>
         <Grid item>
           <Grid
             container

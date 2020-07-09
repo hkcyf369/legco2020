@@ -2,7 +2,6 @@ import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import Chip from '@/components/Chip';
 import styled from 'styled-components';
-import { useTheme } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { withLanguage } from '@/utils/i18n';
 import { PeopleCircle } from '@/components/People';
@@ -45,8 +44,6 @@ const TradFuncConstituencyTemplate = ({
 }) => {
   const { t, i18n } = useTranslation();
 
-  const theme = useTheme();
-
   return (
     <>
       <SEO
@@ -64,8 +61,8 @@ const TradFuncConstituencyTemplate = ({
           },
         ]}
       />
-      <TradTemplateWrapper theme={theme}>
-        <TradHeader container theme={theme}>
+      <TradTemplateWrapper>
+        <TradHeader container>
           <Grid item>
             <Grid
               container
@@ -111,7 +108,7 @@ const TradFuncConstituencyTemplate = ({
           ))}
         </Grid>
         <Typography variant="h5">{t('intended')}</Typography>
-        <CandidatesWrapper theme={theme}>
+        <CandidatesWrapper>
           {candidates
             .filter(c => c.node.is_2020_candidate === 'TRUE')
             .map(c => (

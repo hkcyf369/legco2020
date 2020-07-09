@@ -39,7 +39,8 @@ const DirectWrapper = styled.div`
   grid-gap: ${props => props.theme.spacing(1)}px;
 
   .seat {
-    padding: ${props => props.theme.spacing(1)}px ${props => props.theme.spacing(1.5)}px;
+    padding: ${props => props.theme.spacing(1)}px
+      ${props => props.theme.spacing(1.5)}px;
     border-radius: 2px;
     box-shadow: 0 1px 6px 0 ${props => props.theme.palette.divider};
 
@@ -125,7 +126,8 @@ const TradFCWrapper = styled.div`
   }
 
   .seat {
-    padding: ${props => props.theme.spacing(1)}px ${props => props.theme.spacing(1.5)}px;
+    padding: ${props => props.theme.spacing(1)}px
+      ${props => props.theme.spacing(1.5)}px;
     border-radius: 2px;
     box-shadow: 0 1px 6px 0 ${props => props.theme.palette.divider};
 
@@ -219,12 +221,12 @@ const IndexPage = props => {
   const renderDirect = edges => {
     return (
       <>
-        <DirectHeader theme={theme}>
+        <DirectHeader>
           <Typography variant="body2">
             {t('direct_election_description')}
           </Typography>
         </DirectHeader>
-        <DirectWrapper theme={theme}>
+        <DirectWrapper>
           {edges
             .sort((a, b) => {
               if (a.order > b.order) return 1;
@@ -345,7 +347,7 @@ const IndexPage = props => {
     }, []);
 
     return (
-      <TradFCWrapper theme={theme}>
+      <TradFCWrapper>
         {grouppedFc
           .sort((a, b) => {
             if (a.order > b.order) return 1;
@@ -444,7 +446,7 @@ const IndexPage = props => {
   return (
     <>
       <SEO title="Home" />
-      <FullWidithWrapper theme={theme}>
+      <FullWidithWrapper>
         <SingleStackedBarChart
           data={chartData}
           summary={summary}
@@ -481,14 +483,14 @@ const IndexPage = props => {
                 name: 'geo_func_dc2',
                 title: t('geo_func_dc2'),
                 content: (
-                  <Container theme={theme}>{renderDirect(allGeoFuncDc2.nodes)}</Container>
+                  <Container>{renderDirect(allGeoFuncDc2.nodes)}</Container>
                 ),
               },
               {
                 name: 'trad_func',
                 title: t('trad_func'),
                 content: (
-                  <Container theme={theme}>{renderTradFC(allTradFunc.nodes)}</Container>
+                  <Container>{renderTradFC(allTradFunc.nodes)}</Container>
                 ),
               },
             ]}

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import styled from 'styled-components';
-import { useTheme } from '@material-ui/core/styles';
 
 const List = styled(Grid)`
   box-shadow: 0 1px 6px 0 ${props => props.theme.palette.divider};
@@ -26,14 +25,12 @@ const FlexList = styled.div`
 `;
 
 export const CompactImageLinkBox = ({ onClick, image, title, subTitle }) => {
-  const theme = useTheme();
   return (
     <List
       container
       className="clickable"
       key={title}
       onClick={onClick}
-      theme={theme}
     >
       <Grid item xs={4}>
         {image}
@@ -51,9 +48,8 @@ export const CompactImageLinkBox = ({ onClick, image, title, subTitle }) => {
 };
 
 export const LinkBox = ({ key, onClick, children }) => {
-  const theme = useTheme();
   return (
-    <FlexList className="clickable" key={key} onClick={onClick} theme={theme}>
+    <FlexList className="clickable" key={key} onClick={onClick}>
       {children}
     </FlexList>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import styled from 'styled-components';
-import { useTheme } from '@material-ui/core/styles';
+
 import { useTranslation } from 'react-i18next';
 import { DC2019Result } from '@/data/ElectionResults';
 import VoteVsSeatChart from '@/components/charts/VoteVsSeat';
@@ -84,7 +84,7 @@ const GeoFuncDc2ConstituencyTemplate = ({
     `
   );
 
-  const theme = useTheme();
+  
 
   const demoCandidates = candidates.filter(c => c.node.camp === 'DEMO');
   const beijingCandidates = candidates.filter(c => c.node.camp === 'BEIJING');
@@ -107,7 +107,7 @@ const GeoFuncDc2ConstituencyTemplate = ({
           },
         ]}
       />
-      <GeoHeader container theme={theme}>
+      <GeoHeader container>
         <Grid item>
           <Grid
             container
@@ -137,7 +137,7 @@ const GeoFuncDc2ConstituencyTemplate = ({
       <Typography className="block" variant="body2">
         {withLanguage(i18n, constituency, 'description')}
       </Typography>
-      <CampWrapper container spacing={3} theme={theme}>
+      <CampWrapper container spacing={3}>
         <Grid item xs={6}>
           <div>
             <div>
@@ -145,7 +145,7 @@ const GeoFuncDc2ConstituencyTemplate = ({
             </div>
             <div className="list-number">{demoCandidates.length}</div>
             <Typography variant="caption">{t('intented_list')}</Typography>
-            <CandidatesWrapper theme={theme}>
+            <CandidatesWrapper>
               {demoCandidates.map(c => (
                 <PeopleCircle
                   onClick={() => {
@@ -169,7 +169,7 @@ const GeoFuncDc2ConstituencyTemplate = ({
             </div>
             <div className="list-number">{beijingCandidates.length}</div>
             <Typography variant="caption">{t('intented_list')}</Typography>
-            <CandidatesWrapper mt={2} theme={theme}>
+            <CandidatesWrapper mt={2}>
               {beijingCandidates.map(c => (
                 <PeopleCircle
                   key={withLanguage(i18n, c.node, 'name')}
@@ -184,7 +184,7 @@ const GeoFuncDc2ConstituencyTemplate = ({
                 <span className="camp-text other">{t('alias.OTHER')}</span>
               </div>
               <Typography variant="caption">{t('intented_list')}</Typography>
-              <CandidatesWrapper theme={theme}>
+              <CandidatesWrapper>
                 {otherCandidates.map(c => (
                   <PeopleCircle key={c.node} info={c.node} />
                 ))}

@@ -4,7 +4,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'react-i18next';
 import { withLanguage } from '@/utils/i18n';
-import { useTheme } from '@material-ui/core/styles';
 
 const campColorMapping = (camp, theme) => {
   const mapping = {
@@ -68,14 +67,12 @@ export const PeopleCircle = ({
   ...props
 }) => {
   const { i18n } = useTranslation();
-  const theme = useTheme();
   const name = withLanguage(i18n, info, 'name');
   return (
     <PeopleWrapper
       className="avatar-group clickable"
       onClick={onClick}
       onKeyDown={() => {}}
-      theme={theme}
     >
       <div className="center" {...props}>
         <CampAvatar
@@ -83,7 +80,6 @@ export const PeopleCircle = ({
           src={imgUrl}
           camp={info.camp && info.camp.toLowerCase()}
           xsdimension={xsdimension}
-          theme={theme}
         >
           <img
             alt={name}
@@ -110,7 +106,6 @@ export const PeopleCircle = ({
 };
 
 export const PeopleBox = ({ onClick, name, info, subText, imgUrl, status }) => {
-  const theme = useTheme();
   const Wrapper = styled.div`
     display: flex;
 
@@ -140,7 +135,7 @@ export const PeopleBox = ({ onClick, name, info, subText, imgUrl, status }) => {
     }
   `;
   return (
-    <Wrapper item onClick={onClick} theme={theme}>
+    <Wrapper item onClick={onClick}>
       <div className="avatar-wrapper">
         <CampAvatar
           alt={name}
@@ -148,7 +143,6 @@ export const PeopleBox = ({ onClick, name, info, subText, imgUrl, status }) => {
           camp={info.camp.toLowerCase()}
           xsdimension={56}
           border={5}
-          theme={theme}
           opacity={status.opacity}
         >
           <img

@@ -1,17 +1,17 @@
 import React from 'react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {
-  ThemeProvider,
+  MuiThemeProvider,
   makeStyles,
 } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ContextStoreProvider } from '@/contextStore';
 import { createDynamicTheme } from '@/themes';
+import { ThemeProvider } from 'styled-components'
 import Header from './header';
 import Footer from './Footer';
 import './layout.css';
-
 
 const ThemeProviderWrapper = ({ children }) => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -36,16 +36,18 @@ const ThemeProviderWrapper = ({ children }) => {
 
   const classes = useStyles();
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <div className={classes.root}>
-        <Container maxWidth="lg" className={classes.container}>
-          <Header />
-          <main>{children}</main>
-        </Container>
-        <Footer />
-      </div>
-    </ThemeProvider>
+    <MuiThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <div className={classes.root}>
+          <Container maxWidth="lg" className={classes.container}>
+            <Header />
+            <main>{children}</main>
+          </Container>
+          <Footer />
+        </div>
+      </ThemeProvider>
+    </MuiThemeProvider>
   );
 };
 

@@ -23,7 +23,7 @@ const ResponsiveSections = ({ sections, pageName, variant }) => {
     <>
       {sections.map(section => {
         return (
-          <DesktopWrapper theme={theme}>
+          <DesktopWrapper>
             <div className="title">
               <Typography variant="h4">{section.title}</Typography>
             </div>

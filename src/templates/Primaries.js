@@ -115,7 +115,7 @@ const PrimaryTemplate = ({
                   '_blank'
                 );
               }}
-              image={
+              image={(
                 <img
                   style={{
                     height: '100%',
@@ -129,7 +129,7 @@ const PrimaryTemplate = ({
                   }
                   alt={asset.title}
                 />
-              }
+              )}
               title={asset.title}
               subTitle={asset.channel}
             />
@@ -163,7 +163,7 @@ const PrimaryTemplate = ({
           },
         ]}
       />
-      <Nav theme={theme}>
+      <Nav>
         {allConstituencies.map(c => (
           <Link
             key={c.node.key}
@@ -176,7 +176,7 @@ const PrimaryTemplate = ({
           </Link>
         ))}
       </Nav>
-      <Header container theme={theme}>
+      <Header container>
         <Grid item>
           <Grid
             container
@@ -220,7 +220,7 @@ const PrimaryTemplate = ({
           }}
         />
       )}
-      <CandidatesWrapper theme={theme}>
+      <CandidatesWrapper>
         {candidates
           .sort((a, b) => {
             if (a.node.primary_list_no && b.node.primary_list_no) {
