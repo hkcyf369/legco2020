@@ -28,6 +28,8 @@ const PUBLISHED_SPREADSHEET_LIST_MEMBER_URL =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vTAeIndC4MRj2C0uz-NSRI75bz2FPaAK4zCpUWfDh18WI8duAFmlqWbBHZHCbXu-iGqnsvOa6S5G8fP/pub?gid=0';
 const PUBLISHED_SPREADSHEET_PRIMARIES_STATIONS_URL =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vSu4MsnjK0H4mON_3wlURKRQ7novrIlvPOjWkzfNTB4bW4Fqee9qLVVzJFTEH_eZzc1oniwyP7b3CT7/pub?gid=0';
+const PUBLISHED_SPREADSHEET_ALERT_URL =
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vRfJav9-GTwZrUQ1wETTbdrOMMlZSSdUVBea9OMwIpeEXoLdV8kpp8PQD5q-ZDKI-elYzdJW7qA-NVJ/pub?gid=0';
 const AIRTABLE_CANDIDATES_SPREADSHEET_ID = 'appTst6klxEECAHOv';
 
 
@@ -243,6 +245,12 @@ exports.sourceNodes = async props => {
       PUBLISHED_SPREADSHEET_PRIMARIES_STATIONS_URL,
       'PrimariesStations',
       { skipFirstLine: true, alwaysEnabled: true }
+    ),
+    createPublishedGoogleSpreadsheetNode(
+      props,
+      PUBLISHED_SPREADSHEET_ALERT_URL,
+      'Alert',
+      { skipFirstLine: true }
     ),
     createAirtableNode(
       props,

@@ -7,7 +7,9 @@ export const routeInitialState = {
   fullPath: '/',
 };
 
-export const pageOptionsInitialState = {};
+export const pageOptionsInitialState = {
+  closedAlerts: [],
+};
 
 const ContextStore = React.createContext({
   route: routeInitialState,
