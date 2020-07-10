@@ -61,7 +61,7 @@ const AlertChild = props => {
         <StyledAlert
           severity={severity}
           variant={variant}
-          action={
+          action={(
             <IconButton
               aria-label="close"
               color="inherit"
@@ -73,7 +73,7 @@ const AlertChild = props => {
             >
               <AiFillCloseCircle />
             </IconButton>
-          }
+          )}
         >
           {title && <AlertTitle>{title}</AlertTitle>}
           <span dangerouslySetInnerHTML={{ __html: message }} />
