@@ -19,6 +19,7 @@ import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Alert from '@/components/Alert';
 
 const PrimariesStationsWrapper = styled.div`
   .group-title {
@@ -103,7 +104,7 @@ const PrimariesStationsTemplate = ({
   const { allI18N } = useStaticQuery(
     graphql`
       query {
-        allI18N {
+        allI18N(filter: { enabled: { eq: "Y" } }) {
           edges {
             node {
               key
@@ -195,6 +196,12 @@ const PrimariesStationsTemplate = ({
       });
     });
 
+  const constituencyPrimariesRules = withKeyAndLanguage(
+    i18n,
+    allI18N,
+    `primaries_rules_${constituency.key}`
+  );
+
   return (
     <PrimariesStationsWrapper>
       <SEO
@@ -244,6 +251,9 @@ const PrimariesStationsTemplate = ({
             <Typography variant="h3" gutterBottom>
               {withLanguage(i18n, constituency, 'name')}
             </Typography>
+            {!!constituencyPrimariesRules.length && (
+              <Alert severity="warning">{constituencyPrimariesRules}</Alert>
+            )}
             <Typography
               variant="body1"
               dangerouslySetInnerHTML={{
