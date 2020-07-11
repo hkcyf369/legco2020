@@ -160,7 +160,7 @@ const PrimariesStationsTemplate = ({
                 <StationBox>
                   <div className="content">
                     <Typography variant="caption" color="textSecondary">
-                      {withLanguage(i18n, station, 'dc_name')}
+                      {t('primaries_stations_code', { code: station.code })}
                     </Typography>
                     <Typography variant="h6">
                       {withLanguage(i18n, station, 'address')}
@@ -231,11 +231,11 @@ const PrimariesStationsTemplate = ({
             justify="center"
             className="title-box"
           >
-            <Typography variant='h3' gutterBottom>
+            <Typography variant="h3" gutterBottom>
               {withLanguage(i18n, constituency, 'name')}
             </Typography>
             <Typography
-              variant='body1'
+              variant="body1"
               dangerouslySetInnerHTML={{
                 __html: withKeyAndLanguage(i18n, allI18N, 'primaries_rules'),
               }}

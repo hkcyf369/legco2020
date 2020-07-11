@@ -428,6 +428,7 @@ exports.createPages = async function createPages({
             constituency
             lc_name_zh
             paper_vote
+            code
             address_zh
             remarks_zh
             address_en

@@ -111,5 +111,6 @@
     "primaries_stations.title": "Primaries Stations",
     "primaries_candidates": "Candidates",
     "demo_primaries.title": "Pro-Democracy primaries",
-    "socialPost.no_content": "Social posts are temporarily available"
+    "socialPost.no_content": "Social posts are temporarily available",
+    "primaries_stations_code": "Station code: {{code}}"
 }
