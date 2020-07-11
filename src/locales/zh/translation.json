@@ -113,5 +113,7 @@
   "primaries_candidates": "初選候選人",
   "demo_primaries.title": "民主派初選",
   "socialPost.no_content": "暫時未有網上熱話",
-  "primaries_stations_code": "票站編號：{{code}}"
+  "primaries_stations_code": "票站編號：{{code}}",
+  "primaries_result.title": "民主派初選結果",
+  "people_votes": "{{votes}}票"
 }

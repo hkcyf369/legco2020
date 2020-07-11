@@ -313,6 +313,7 @@ exports.createPages = async function createPages({
   const ProfileTemplate = path.resolve('./src/templates/Profile.js');
 
   const PrimaryTemplate = path.resolve('./src/templates/Primaries.js');
+  const PrimariesResultTemplate = path.resolve('./src/templates/PrimariesResult.js');
 
   const PrimariesStationsTemplate = path.resolve('./src/templates/PrimariesStations.js');
 
@@ -463,6 +464,7 @@ exports.createPages = async function createPages({
             name_zh
             name_en
             primary_list_no
+            primaries_votes
             description_zh
             tags {
               name_zh
@@ -576,24 +578,46 @@ exports.createPages = async function createPages({
         },
       })
 
+      if (process.env.IS_PRIMARIES === 'true') {
+        createPage({
+          path: uri,
+          component: PrimaryTemplate,
+          context: {
+            uri,
+            allConstituencies: result.data.allPrimary.edges,
+            constituency: constituency.node,
+            candidates: result.data.allCandidates.edges.filter(
+              p =>
+                p.node.constituency === constituency.node.key &&
+                p.node.camp === 'DEMO' &&
+                p.node.tags && p.node.tags.findIndex(tag => tag.name_zh === '民主派初選') !== -1
+            ),
+            locale: lang,
+            assets: Assets.filter(a => a.node.constituency === constituency.node.key).map(a => a.node),
+          },
+        });
+      } else {
+        createPage({
+          path: uri,
+          component: PrimariesResultTemplate,
+          context: {
+            uri,
+            allConstituencies: result.data.allPrimary.edges,
+            constituency: constituency.node,
+            candidates: result.data.allCandidates.edges.filter(
+              p =>
+                p.node.constituency === constituency.node.key &&
+                p.node.camp === 'DEMO' &&
+                p.node.tags && p.node.tags.findIndex(tag => tag.name_zh === '民主派初選') !== -1
+            ),
+            locale: lang,
+            assets: Assets.filter(a => a.node.constituency === constituency.node.key).map(a => a.node),
+          },
+        });
+      }
 
-      createPage({
-        path: uri,
-        component: PrimaryTemplate,
-        context: {
-          uri,
-          allConstituencies: result.data.allPrimary.edges,
-          constituency: constituency.node,
-          candidates: result.data.allCandidates.edges.filter(
-            p =>
-              p.node.constituency === constituency.node.key &&
-              p.node.camp === 'DEMO' &&
-              p.node.tags && p.node.tags.findIndex(tag => tag.name_zh === '民主派初選') !== -1
-          ),
-          locale: lang,
-          assets: Assets.filter(a => a.node.constituency === constituency.node.key).map(a => a.node),
-        },
-      });
+
+      
     });
   });
 
