@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Typography, Fab, Container } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
@@ -16,6 +16,9 @@ import { useTheme } from '@material-ui/core/styles';
 import { RiDirectionLine } from 'react-icons/ri';
 import { BsPeopleFill } from 'react-icons/bs';
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const PrimariesStationsWrapper = styled.div`
   .group-title {
@@ -113,6 +116,8 @@ const PrimariesStationsTemplate = ({
     `
   );
 
+  const [paperStationOnly, setPaperStationOnly] = useState(false);
+
   const theme = useTheme();
 
   const sections = [];
@@ -147,39 +152,44 @@ const PrimariesStationsTemplate = ({
         title: group.title,
         content: (
           <List>
-            {group.stations.map(station => (
-              <LinkBox
-                key={station.id}
-                onClick={() => {
-                  window.open(
-                    `https://maps.google.com/?q=${station.address_zh}`,
-                    '_blank'
-                  );
-                }}
-              >
-                <StationBox>
-                  <div className="content">
-                    <Typography variant="caption" color="textSecondary">
-                      {t('primaries_stations_code', { code: station.code })}
-                    </Typography>
-                    <Typography variant="h6">
-                      {withLanguage(i18n, station, 'address')}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {withLanguage(i18n, station, 'remarks')}
-                    </Typography>
-                    {station.paper_vote === 'Y' && (
-                      <Typography variant="caption" className="paper-vote-text">
-                        {t('paper_vote')}
+            {group.stations
+              .filter(station => station.paper_vote || !paperStationOnly)
+              .map(station => (
+                <LinkBox
+                  key={station.id}
+                  onClick={() => {
+                    window.open(
+                      `https://maps.google.com/?q=${station.address_zh}`,
+                      '_blank'
+                    );
+                  }}
+                >
+                  <StationBox>
+                    <div className="content">
+                      <Typography variant="caption" color="textSecondary">
+                        {t('primaries_stations_code', { code: station.code })}
                       </Typography>
-                    )}
-                  </div>
-                  <div>
-                    <RiDirectionLine className="icon" />
-                  </div>
-                </StationBox>
-              </LinkBox>
-            ))}
+                      <Typography variant="h6">
+                        {withLanguage(i18n, station, 'address')}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        {withLanguage(i18n, station, 'remarks')}
+                      </Typography>
+                      {station.paper_vote === 'Y' && (
+                        <Typography
+                          variant="caption"
+                          className="paper-vote-text"
+                        >
+                          {t('paper_vote')}
+                        </Typography>
+                      )}
+                    </div>
+                    <div>
+                      <RiDirectionLine className="icon" />
+                    </div>
+                  </StationBox>
+                </LinkBox>
+              ))}
           </List>
         ),
       });
@@ -240,6 +250,19 @@ const PrimariesStationsTemplate = ({
                 __html: withKeyAndLanguage(i18n, allI18N, 'primaries_rules'),
               }}
             />
+            <br />
+            <FormGroup row>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={paperStationOnly}
+                    onChange={() => setPaperStationOnly(!paperStationOnly)}
+                    name="paper_only"
+                  />
+                }
+                label={t('paper_only')}
+              />
+            </FormGroup>
           </Grid>
         </Grid>
       </Header>
