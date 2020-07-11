@@ -100,7 +100,7 @@ const PrimariesStationsTemplate = ({
   const { allI18N } = useStaticQuery(
     graphql`
       query {
-        allI18N {
+        allI18N(filter: { enabled: { eq: "Y" } }) {
           edges {
             node {
               key
@@ -185,6 +185,12 @@ const PrimariesStationsTemplate = ({
       });
     });
 
+  const constituencyPrimariesRules = withKeyAndLanguage(
+    i18n,
+    allI18N,
+    `primaries_rules_${constituency.key}`
+  );
+
   return (
     <PrimariesStationsWrapper>
       <SEO
@@ -234,6 +240,14 @@ const PrimariesStationsTemplate = ({
             <Typography variant="h3" gutterBottom>
               {withLanguage(i18n, constituency, 'name')}
             </Typography>
+            {!!constituencyPrimariesRules.length && (
+              <Typography
+                variant="body1"
+                dangerouslySetInnerHTML={{
+                  __html: constituencyPrimariesRules,
+                }}
+              />
+            )}
             <Typography
               variant="body1"
               dangerouslySetInnerHTML={{
