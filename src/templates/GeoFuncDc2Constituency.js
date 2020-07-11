@@ -11,7 +11,6 @@ import { PeopleCircle } from '@/components/People';
 import SEO from '@/components/seo';
 import { useStaticQuery, graphql, navigate } from 'gatsby';
 
-
 const GeoHeader = styled(Grid)`
 
   .title-box {
@@ -84,11 +83,15 @@ const GeoFuncDc2ConstituencyTemplate = ({
     `
   );
 
-  
-
-  const demoCandidates = candidates.filter(c => c.node.camp === 'DEMO');
-  const beijingCandidates = candidates.filter(c => c.node.camp === 'BEIJING');
-  const otherCandidates = candidates.filter(c => c.node.camp === 'OTHER');
+  const demoCandidates = candidates.filter(
+    c => c.node.camp === 'DEMO' && c.node.is_2020_candidate === 'TRUE'
+  );
+  const beijingCandidates = candidates.filter(
+    c => c.node.camp === 'BEIJING' && c.node.is_2020_candidate === 'TRUE'
+  );
+  const otherCandidates = candidates.filter(
+    c => c.node.camp === 'OTHER' && c.node.is_2020_candidate === 'TRUE'
+  );
 
   return (
     <>
@@ -149,7 +152,12 @@ const GeoFuncDc2ConstituencyTemplate = ({
               {demoCandidates.map(c => (
                 <PeopleCircle
                   onClick={() => {
-                    navigate(getLocalizedPath(i18n, `/profile/${c.node.uuid}/${c.node.name_zh}`));
+                    navigate(
+                      getLocalizedPath(
+                        i18n,
+                        `/profile/${c.node.uuid}/${c.node.name_zh}`
+                      )
+                    );
                   }}
                   imgUrl={`${site.siteMetadata.siteUrl}/images/avatars/${c.node.uuid}.png`}
                   key={withLanguage(i18n, c.node, 'name')}
