@@ -110,7 +110,7 @@ const PrimaryTemplate = ({
                   '_blank'
                 );
               }}
-              image={(
+              image={
                 <img
                   style={{
                     height: '100%',
@@ -124,7 +124,7 @@ const PrimaryTemplate = ({
                   }
                   alt={asset.title}
                 />
-              )}
+              }
               title={asset.title}
               subTitle={asset.channel}
             />
@@ -171,10 +171,7 @@ const PrimaryTemplate = ({
           </Link>
         ))}
       </Nav>
-      <Header 
-        container
-        justify="flex-start"
-      >
+      <Header container justify="flex-start">
         <Grid item>
           <Grid
             container
@@ -221,15 +218,6 @@ const PrimaryTemplate = ({
       <CandidatesWrapper>
         {candidates
           .sort((a, b) => {
-            if (a.node.primary_list_no && b.node.primary_list_no) {
-              if (
-                Number(a.node.primary_list_no) > Number(b.node.primary_list_no)
-              ) {
-                return 1;
-              }
-              return -1;
-            }
-
             if (a.node.name_en > b.node.name_en) {
               return 1;
             }

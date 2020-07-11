@@ -463,7 +463,6 @@ exports.createPages = async function createPages({
             status
             name_zh
             name_en
-            primary_list_no
             primaries_votes
             description_zh
             tags {
