@@ -49,14 +49,19 @@ const DirectWrapper = styled.div`
       justify-content: space-between;
     }
 
+    .flex-column {
+      display: flex;
+      flex-direction: column;
+    }
+
     .roundup-title {
       margin-top: ${props => props.theme.spacing(0.5)}px;
       display: flex;
       justify-content: space-between;
-    }
 
-    .roundup-title div {
-      line-height: 0.5;
+      .flex-column span {
+        line-height: 1rem;
+      }
     }
 
     .roundup-title div:last-child {
@@ -255,7 +260,9 @@ const IndexPage = props => {
                     <Typography variant="caption" color="textSecondary">
                       {t('no_of_seats', { seats: e.seats })}
                     </Typography>
-                    <div className="sub-title">{t('estimated_result')}</div>
+                    <Typography variant="caption" color="textSecondary">
+                      {t('estimated_result')}
+                    </Typography>
                   </div>
                   <div className="title">
                     <div>
@@ -274,17 +281,21 @@ const IndexPage = props => {
                     </div>
                   </div>
                   <div className="roundup-title">
-                    <div>
+                    <div className="flex-column">
                       <Typography variant="caption">
                         {t('alias.DEMO')}
                       </Typography>
-                      <div className="sub-title">{t('intented_list')}</div>
+                      <Typography variant="caption">
+                        {t('intented_list')}
+                      </Typography>
                     </div>
-                    <div>
+                    <div className="flex-column">
                       <Typography variant="caption">
                         {t('alias.BEIJING')}
                       </Typography>
-                      <div className="sub-title">{t('intented_list')}</div>
+                      <Typography variant="caption">
+                        {t('intented_list')}
+                      </Typography>
                     </div>
                   </div>
                   <div className="roundup">
