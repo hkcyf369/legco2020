@@ -16,6 +16,7 @@ import { useTheme } from '@material-ui/core/styles';
 import { RiDirectionLine } from 'react-icons/ri';
 import { BsPeopleFill } from 'react-icons/bs';
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
+import Alert from '@/components/Alert';
 
 const PrimariesStationsWrapper = styled.div`
   .group-title {
@@ -241,12 +242,7 @@ const PrimariesStationsTemplate = ({
               {withLanguage(i18n, constituency, 'name')}
             </Typography>
             {!!constituencyPrimariesRules.length && (
-              <Typography
-                variant="body1"
-                dangerouslySetInnerHTML={{
-                  __html: constituencyPrimariesRules,
-                }}
-              />
+              <Alert severity="warning">{constituencyPrimariesRules}</Alert>
             )}
             <Typography
               variant="body1"
