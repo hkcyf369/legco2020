@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { select, sum, scaleLinear } from 'd3';
 import useResizeObserver from '@/utils/ResizeObserver';
 import { useTheme } from '@material-ui/core/styles';
+import { BrowserText } from '@/utils'
 
 function SingleStackedBar({ data, summary, title }) {
   const theme = useTheme();
@@ -81,10 +82,10 @@ function SingleStackedBar({ data, summary, title }) {
         .attr('x', () =>
           i === 0
             ? 0 + theme.spacing(2)
-            : dimensions.width - theme.spacing(2) - bg.width
+            : dimensions.width - theme.spacing(2) - (BrowserText.getWidth(summary[camp].name, 12, 'Helvetica') + 6)
         )
         .attr('y', 0)
-        .attr('width', bg.width)
+        .attr('width', BrowserText.getWidth(summary[camp].name, 12, 'Helvetica') + 6)
         .attr('height', bg.height)
         .style('fill', summary[camp].background);
 
