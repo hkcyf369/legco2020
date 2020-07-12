@@ -57,6 +57,8 @@ const Header = styled(Grid)`
 `;
 
 const ProportionBar = styled.div`
+  margin: ${props => props.theme.spacing(2)}px 0;
+
   .labels {
     display: flex;
     align-items: baseline;
@@ -178,17 +180,15 @@ const PrimaryTemplate = ({
   const totalVotes = candidates.reduce((a, c) => a + c.node.primaries_votes, 0);
   const maxVote = Math.max(...candidates.map(c => c.node.primaries_votes));
 
-  // p.node.tags.findIndex(tag => tag.name_zh === '抗爭派聲明書') !== -1
-
   const getProportion = () => {
     const left = candidates
       .filter(
-        c => c.node.tags.findIndex(tag => tag.name_zh === '本土／抗爭派') === -1
+        c => c.node.tags.findIndex(tag => tag.name_zh === '本土及抗爭派') === -1
       )
       .reduce((a, c) => a + c.node.primaries_votes, 0);
     const right = candidates
       .filter(
-        c => c.node.tags.findIndex(tag => tag.name_zh === '本土／抗爭派') !== -1
+        c => c.node.tags.findIndex(tag => tag.name_zh === '本土及抗爭派') !== -1
       )
       .reduce((a, c) => a + c.node.primaries_votes, 0);
 
@@ -293,7 +293,7 @@ const PrimaryTemplate = ({
         >
           <div className="labels">
             <Typography variant="h5" className="left-label">
-              {t('valiance_localist')}
+              {t('resistance_localist')}
             </Typography>
             <DefaultTooltip
               title={
@@ -302,7 +302,7 @@ const PrimaryTemplate = ({
                     __html: withKeyAndLanguage(
                       i18n,
                       allI18N,
-                      'valiance_localist_remarks'
+                      'resistance_localist_remarks'
                     ),
                   }}
                 />

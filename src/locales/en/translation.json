@@ -116,5 +116,5 @@
     "primaries_stations_code": "Station code: {{code}}",
     "primaries_result.title": "Primaries result",
     "people_votes": "{{votes}}",
-    "valiance_localist": "Valiance / localist vote ratio"
+    "resistance_localist": "Resistance & Localist vote ratio"
 }
