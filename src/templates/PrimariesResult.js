@@ -183,12 +183,12 @@ const PrimaryTemplate = ({
   const getProportion = () => {
     const left = candidates
       .filter(
-        c => c.node.tags.findIndex(tag => tag.name_zh === '本土及抗爭派') === -1
+        c => c.node.tags.findIndex(tag => tag.name_zh === '本土及抗爭派') > -1
       )
       .reduce((a, c) => a + c.node.primaries_votes, 0);
     const right = candidates
       .filter(
-        c => c.node.tags.findIndex(tag => tag.name_zh === '本土及抗爭派') !== -1
+        c => c.node.tags.findIndex(tag => tag.name_zh === '本土及抗爭派') === -1
       )
       .reduce((a, c) => a + c.node.primaries_votes, 0);
 
