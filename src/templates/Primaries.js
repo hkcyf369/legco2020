@@ -110,7 +110,7 @@ const PrimaryTemplate = ({
                   '_blank'
                 );
               }}
-              image={
+              image={(
                 <img
                   style={{
                     height: '100%',
@@ -124,7 +124,7 @@ const PrimaryTemplate = ({
                   }
                   alt={asset.title}
                 />
-              }
+              )}
               title={asset.title}
               subTitle={asset.channel}
             />

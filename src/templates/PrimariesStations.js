@@ -263,13 +263,13 @@ const PrimariesStationsTemplate = ({
             <br />
             <FormGroup row>
               <FormControlLabel
-                control={
+                control={(
                   <Checkbox
                     checked={paperStationOnly}
                     onChange={() => setPaperStationOnly(!paperStationOnly)}
                     name="paper_only"
                   />
-                }
+                )}
                 label={t('paper_only')}
               />
             </FormGroup>
