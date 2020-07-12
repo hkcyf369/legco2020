@@ -115,5 +115,6 @@
     "socialPost.no_content": "Social posts are temporarily available",
     "primaries_stations_code": "Station code: {{code}}",
     "primaries_result.title": "Primaries result",
-    "people_votes": "{{votes}}"
+    "people_votes": "{{votes}}",
+    "valiance_localist": "Valiance / localist vote ratio"
 }

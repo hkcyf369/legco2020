@@ -9,7 +9,7 @@ import {
   handleVideoUrl,
   getPeopleStatus,
 } from '@/utils';
-import { withLanguage, getLocalizedPath } from '@/utils/i18n';
+import { withLanguage, getLocalizedPath, withKeyAndLanguage } from '@/utils/i18n';
 import { Link, navigate, useStaticQuery, graphql } from 'gatsby';
 import { PeopleResultBox } from '@/components/People';
 import ResponsiveSections from '@/components/ResponsiveSections';
@@ -19,6 +19,8 @@ import { CompactImageLinkBox } from '@/components/LinkBox';
 import { useTheme } from '@material-ui/core/styles';
 import { FaVoteYea } from 'react-icons/fa';
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
+import { DefaultTooltip } from '@/components/Tooltip';
+import { BsInfoCircleFill } from 'react-icons/bs';
 
 const Nav = styled.div`
   padding: ${props => props.theme.spacing(1)}px 0;
@@ -50,6 +52,43 @@ const Header = styled(Grid)`
   }
 `;
 
+const ProportionBar = styled.div`
+
+  .labels {
+    display: flex;
+    align-items: baseline;
+    svg {
+      margin-left: 4px; 
+    }
+  }
+  
+  .bar {
+    display: flex;
+
+    .left {
+      height: 18px;
+      width: ${props => props.left}%;
+      border-radius: 16px 0 0 16px;
+      background: ${props => props.theme.palette.secondary.main};
+      vertical-align: center;
+
+      .percentage {
+        font-weight: 700;
+        margin-left: 8px;
+        color: ${props => props.theme.palette.background.default};
+      }
+    }
+  
+    .right {
+      height: 18px;
+      width: ${props => props.right}%;
+      border-radius: 0 16px 16px 0;
+      background: ${props => props.theme.palette.action.disabled};
+    }
+
+  }
+`;
+
 const CandidatesWrapper = styled.div`
   margin-top: ${props => props.theme.spacing(2)}px;
   display: grid;
@@ -67,12 +106,21 @@ const PrimaryTemplate = ({
 }) => {
   const { t, i18n } = useTranslation();
 
-  const { site } = useStaticQuery(
+  const { site, allI18N } = useStaticQuery(
     graphql`
       query {
         site {
           siteMetadata {
             siteUrl
+          }
+        }
+        allI18N(filter: { enabled: { eq: "Y" } }) {
+          edges {
+            node {
+              key
+              text_zh
+              text_en
+            }
           }
         }
       }
@@ -127,6 +175,24 @@ const PrimaryTemplate = ({
 
   const totalVotes = candidates.reduce((a, c) => a + c.node.primaries_votes, 0);
   const maxVote = Math.max(...candidates.map(c => c.node.primaries_votes));
+
+  // p.node.tags.findIndex(tag => tag.name_zh === '抗爭派聲明書') !== -1 
+
+  const getProportion = () => {
+    const left = candidates.filter(c => c.node.tags.findIndex(tag => tag.name_zh === '本土／抗爭派') === -1).reduce((a, c) => a + c.node.primaries_votes, 0)
+    const right = candidates.filter(c => c.node.tags.findIndex(tag => tag.name_zh === '本土／抗爭派') !== -1).reduce((a, c) => a + c.node.primaries_votes, 0)
+
+    return {
+      left: {
+        votes: left,
+        percentage: left / totalVotes * 100,
+      },
+      right: {
+        votes: right,
+        percentage: right / totalVotes * 100,
+      }
+    }
+  }
 
   return (
     <>
@@ -210,6 +276,34 @@ const PrimaryTemplate = ({
           }}
         />
       )}
+      {!!totalVotes && constituency.key !== 'HS' && <ProportionBar
+        left={getProportion().left.percentage}
+        right={getProportion().right.percentage}
+      >
+        <div className='labels'>
+          <Typography variant='h5' className='left-label'>{t('valiance_localist')}</Typography>
+          <DefaultTooltip
+            title={(
+              <div dangerouslySetInnerHTML={{
+                __html: withKeyAndLanguage(i18n, allI18N, 'valiance_localist_remarks'),
+              }} />
+            )}
+            enterTouchDelay={10}
+            leaveTouchDelay={5000}
+            interactive
+          >
+            <div>
+              <BsInfoCircleFill />
+            </div>
+          </DefaultTooltip>
+        </div>
+        <div className='bar'>
+          <div className='left'>
+            <Typography variant='h6' className='percentage'>{getProportion().left.percentage.toFixed(2)}%</Typography>
+          </div>
+          <div className='right' />
+        </div>
+      </ProportionBar>}
       <CandidatesWrapper>
         {candidates
           .sort((a, b) => {
