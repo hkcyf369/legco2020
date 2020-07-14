@@ -4,11 +4,7 @@ import { graphql, navigate } from 'gatsby';
 import { Typography, Button, Grid } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import {
-  withLanguage,
-  getLocalizedPath,
-  withKeyAndLanguage,
-} from '@/utils/i18n';
+import { withLanguage, useRemoteI18n, getLocalizedPath } from '@/utils/i18n';
 import { FaVoteYea } from 'react-icons/fa';
 
 const DirectHeader = styled.div`
@@ -86,7 +82,7 @@ const DirectWrapper = styled.div`
 
 const PrimaryPage = props => {
   const {
-    data: { allPrimary, allCandidates, allI18N },
+    data: { allPrimary, allCandidates },
   } = props;
 
   const { t } = useTranslation();
@@ -171,6 +167,8 @@ const PrimaryPage = props => {
     );
   };
 
+  const ri18n = useRemoteI18n();
+
   return (
     <>
       <SEO title="Primary" />
@@ -181,7 +179,7 @@ const PrimaryPage = props => {
         <Typography
           variant="body1"
           dangerouslySetInnerHTML={{
-            __html: withKeyAndLanguage(i18n, allI18N, 'primaries_rules'),
+            __html: ri18n('primaries_rules'),
           }}
         />
         <Button
@@ -205,15 +203,6 @@ export default PrimaryPage;
 
 export const PrimaryPageQuery = graphql`
   query {
-    allI18N {
-      edges {
-        node {
-          key
-          text_zh
-          text_en
-        }
-      }
-    }
     allPrimary {
       edges {
         node {

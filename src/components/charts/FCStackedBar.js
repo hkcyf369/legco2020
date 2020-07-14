@@ -179,6 +179,7 @@ function FCStackedBar({ data }) {
       .style('font-size', 16)
       .style('font-weight', 700)
       .text(d => d.value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, dimensions]);
 
   return (

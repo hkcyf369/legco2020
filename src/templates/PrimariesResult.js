@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import React from 'react';
 import { Grid, Typography, Fab, Container } from '@material-ui/core';
 import styled from 'styled-components';
@@ -9,11 +10,7 @@ import {
   handleVideoUrl,
   getPeopleStatus,
 } from '@/utils';
-import {
-  withLanguage,
-  getLocalizedPath,
-  withKeyAndLanguage,
-} from '@/utils/i18n';
+import { getLocalizedPath, withLanguage, useRemoteI18n } from '@/utils/i18n';
 import { Link, navigate, useStaticQuery, graphql } from 'gatsby';
 import { PeopleResultBox } from '@/components/People';
 import ResponsiveSections from '@/components/ResponsiveSections';
@@ -109,22 +106,14 @@ const PrimaryTemplate = ({
   pageContext: { uri, allConstituencies, constituency, candidates, assets },
 }) => {
   const { t, i18n } = useTranslation();
+  const ri18n = useRemoteI18n();
 
-  const { site, allI18N } = useStaticQuery(
+  const { site } = useStaticQuery(
     graphql`
       query {
         site {
           siteMetadata {
             siteUrl
-          }
-        }
-        allI18N(filter: { enabled: { eq: "Y" } }) {
-          edges {
-            node {
-              key
-              text_zh
-              text_en
-            }
           }
         }
       }
@@ -299,11 +288,7 @@ const PrimaryTemplate = ({
               title={
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: withKeyAndLanguage(
-                      i18n,
-                      allI18N,
-                      'resistance_localist_remarks'
-                    ),
+                    __html: ri18n('resistance_localist_remarks'),
                   }}
                 />
               }

@@ -10,7 +10,7 @@ const LANGUAGES = ['zh', 'en'];
 
 require('dotenv').config();
 
-const PUBLISHED_SPREADSHEET_I18N_URL = 
+const PUBLISHED_SPREADSHEET_I18N_URL =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vQxZuhwUXNXiyFOyMZvBHcb0C1BUBGtOZ852dvx2sVhLVMN-hIXJUS6bDHnxgx7ho5U6J1P7sBWMNd4/pub?gid=0'
 const PUBLISHED_SPREADSHEET_GEOGRAPHICAL_CONSTITUENCIES_FC2_URL =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vTSlXzn8tUEIgTAtQK4cey1JzunOctvquNQr-_76l98vdhD9Y4It5ZoNk06wEuBGoPIccFcjan0RXm7/pub?gid=1850485765';
@@ -92,7 +92,7 @@ const createAirtableNode = async (
 }
 
 const createPublishedGoogleSpreadsheetNode = async (
-  { actions: { createNode }, createNodeId, createContentDigest },
+  { actions: { createNode, createTypes }, createNodeId, createContentDigest },
   publishedURL,
   type,
   { skipFirstLine = false, alwaysEnabled = false, subtype = null }
@@ -105,27 +105,45 @@ const createPublishedGoogleSpreadsheetNode = async (
   );
   const data = await result.text();
   const records = await csv2json().fromString(data);
-  records
+  const filteredRecords = records
     .filter(
       r => alwaysEnabled || (isDebug && r.enabled === 'N') || r.enabled === 'Y'
-    )
-    .forEach((p, i) => {
-      // create node for build time data example in the docs
-      const meta = {
-        // required fields
-        id: createNodeId(
-          `${type.toLowerCase()}${subtype ? `-${subtype}` : ''}-${i}`
-        ),
-        parent: null,
-        children: [],
-        internal: {
-          type,
-          contentDigest: createContentDigest(p),
-        },
-      };
-      const node = { ...p, subtype, ...meta };
-      createNode(node);
-    });
+    );
+
+  if (filteredRecords.length > 0) {
+    filteredRecords
+      .forEach((p, i) => {
+        // create node for build time data example in the docs
+        const meta = {
+          // required fields
+          id: createNodeId(
+            `${type.toLowerCase()}${subtype ? `-${subtype}` : ''}-${i}`
+          ),
+          parent: null,
+          children: [],
+          internal: {
+            type,
+            contentDigest: createContentDigest(p),
+          },
+        };
+        const node = { ...p, subtype, ...meta };
+        createNode(node);
+      });
+  } else if (records.length > 0) {
+    // So if filtered rows is empty, 
+    // we manually create the type here. 
+    
+    // TODO: handle not even a single row ...
+    const fields = Object.keys(records[0]);
+    const fieldString = fields.map(field => `${field}: String`).join('\n');
+    const typeTemplate = `
+      type ${type} implements Node {
+        ${fieldString}
+      }
+    `;
+    createTypes(typeTemplate);
+  }
+
 };
 
 
@@ -193,10 +211,10 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
 exports.sourceNodes = async props => {
   await Promise.all([
     createPublishedGoogleSpreadsheetNode(
-        props,
-        PUBLISHED_SPREADSHEET_I18N_URL,
-        'i18n',
-        { skipFirstLine: false, alwaysEnabled: true }
+      props,
+      PUBLISHED_SPREADSHEET_I18N_URL,
+      'i18n',
+      { skipFirstLine: false, alwaysEnabled: true }
     ),
     createPublishedGoogleSpreadsheetNode(
       props,
@@ -277,6 +295,7 @@ exports.sourceNodes = async props => {
 
 // https://www.gatsbyjs.org/docs/schema-customization/#foreign-key-fields
 exports.createSchemaCustomization = ({ actions }) => {
+  console.log('createTypes');
   const { createTypes } = actions
   const typeDefs = [
     `type Candidates implements Node {
@@ -616,7 +635,7 @@ exports.createPages = async function createPages({
       }
 
 
-      
+
     });
   });
 
@@ -704,6 +723,7 @@ exports.createPages = async function createPages({
       })
     ).catch(
       error => {
+        // eslint-disable-next-line no-console
         console.log(error)
         return {
           person: person.node,
