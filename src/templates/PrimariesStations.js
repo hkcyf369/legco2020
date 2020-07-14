@@ -1,13 +1,10 @@
+/* eslint-disable react/no-danger */
 import React, { useState } from 'react';
 import { Grid, Typography, Fab, Container } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import {
-  withLanguage,
-  getLocalizedPath,
-  withKeyAndLanguage,
-} from '@/utils/i18n';
-import { Link, navigate, useStaticQuery, graphql } from 'gatsby';
+import { withLanguage, useRemoteI18n, getLocalizedPath } from '@/utils/i18n';
+import { Link, navigate } from 'gatsby';
 import ResponsiveSections from '@/components/ResponsiveSections';
 import List from '@/components/List';
 import SEO from '@/components/seo';
@@ -101,24 +98,7 @@ const PrimariesStationsTemplate = ({
 }) => {
   const { t, i18n } = useTranslation();
 
-  const { allI18N } = useStaticQuery(
-    graphql`
-      query {
-        allI18N(filter: { enabled: { eq: "Y" } }) {
-          edges {
-            node {
-              key
-              text_zh
-              text_en
-            }
-          }
-        }
-      }
-    `
-  );
-
   const [paperStationOnly, setPaperStationOnly] = useState(false);
-
   const theme = useTheme();
 
   const sections = [];
@@ -195,10 +175,9 @@ const PrimariesStationsTemplate = ({
         ),
       });
     });
+  const ri18n = useRemoteI18n();
 
-  const constituencyPrimariesRules = withKeyAndLanguage(
-    i18n,
-    allI18N,
+  const constituencyPrimariesRules = ri18n(
     `primaries_rules_${constituency.key}`
   );
 
@@ -257,7 +236,7 @@ const PrimariesStationsTemplate = ({
             <Typography
               variant="body1"
               dangerouslySetInnerHTML={{
-                __html: withKeyAndLanguage(i18n, allI18N, 'primaries_rules'),
+                __html: ri18n('primaries_rules'),
               }}
             />
             <br />

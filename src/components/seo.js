@@ -46,6 +46,7 @@ const SEO = ({ meta, uri, titleOveride }) => {
   } else {
     title = _isEmpty(currentPage) ? t('index.title') : t(currentPage.title);
     if (_isEmpty(currentPage) && !uri) {
+      // eslint-disable-next-line no-console
       console.error(
         `cannot look up page title. check the settings for path: ${path}`
       );
