@@ -5,6 +5,7 @@ module.exports = {
   extends: ['react-app', 'airbnb', 'prettier'],
   rules: {
     'react/jsx-filename-extension': [0, { extensions: ['.js', '.jsx'] }],
+    'react/jsx-wrap-multilines': ["error", {"declaration": false, "assignment": false}],
     'import/prefer-default-export': 0,
     'jsx-a11y/no-static-element-interactions': 0,
     'jsx-a11y/click-events-have-key-events': 0,
